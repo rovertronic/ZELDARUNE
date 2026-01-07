@@ -372,7 +372,7 @@ OBJDUMP_FLAGS := -d -r -z -Mreg-names=32
 #### Files ####
 
 # ROM image
-ROM      := $(BUILD_DIR)/hackeroot-$(VERSION).z64
+ROM      := $(BUILD_DIR)/ZELDARUNE.z64
 ROMC     := $(ROM:.z64=-compressed-$(COMPRESSION).z64)
 ELF      := $(ROM:.z64=.elf)
 MAP      := $(ROM:.z64=.map)

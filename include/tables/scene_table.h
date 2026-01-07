@@ -131,6 +131,8 @@
 #endif
 #endif
 
+DEFINE_SCENE(titan_scene, none, SCENE_TITAN, SDC_DEFAULT, 0, 0)
+
 #if TESTSUITE_MODE
 #include "testsuite/scene_table.h"
 #endif

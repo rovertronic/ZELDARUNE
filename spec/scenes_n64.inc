@@ -3909,3 +3909,23 @@ beginseg
     include "$(BUILD_DIR)/assets/scenes/dungeons/ganontikasonogo/ganontikasonogo_room_1.o"
     number 3
 endseg
+
+beginseg
+    name "titan_scene"
+    compress
+    romalign 0x1000
+    include "$(BUILD_DIR)/assets/scenes/overworld/titan/titan_scene_main.o"
+    include "$(BUILD_DIR)/assets/scenes/overworld/titan/titan_scene_col.o"
+    number 2
+endseg
+
+beginseg
+    name "titan_room_0"
+    compress
+    romalign 0x1000
+    include "$(BUILD_DIR)/assets/scenes/overworld/titan/titan_room_0_main.o"
+    include "$(BUILD_DIR)/assets/scenes/overworld/titan/titan_room_0_model_info.o"
+    include "$(BUILD_DIR)/assets/scenes/overworld/titan/titan_room_0_model.o"
+    number 3
+endseg
+
