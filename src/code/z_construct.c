@@ -330,9 +330,9 @@ void Regs_InitDataImpl(void) {
     YREG(93) = 6;
     YREG(94) = 3;
     YREG(95) = 1;
-    R_MAGIC_FILL_COLOR(0) = 0;
-    R_MAGIC_FILL_COLOR(1) = 200;
-    R_MAGIC_FILL_COLOR(2) = 0;
+    R_MAGIC_FILL_COLOR(0) = 30;
+    R_MAGIC_FILL_COLOR(1) = 50;
+    R_MAGIC_FILL_COLOR(2) = 255;
     ZREG(9) = 140;
     ZREG(10) = 200;
     ZREG(11) = 0;

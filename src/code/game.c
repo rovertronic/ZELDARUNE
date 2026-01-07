@@ -614,7 +614,7 @@ void* GameState_Alloc(GameState* gameState, size_t size, const char* file, int l
             PRINTF(T("ハイラルは滅亡してしまった\n", "Hyrule has been destroyed\n"));
             ret = NULL;
         }
-    }
+}
     if (ret != NULL) {
         PRINTF_COLOR_GREEN();
         PRINTF("game_alloc(%08x) %08x-%08x [%s:%d]\n", size, ret, (uintptr_t)ret + size, file, line);

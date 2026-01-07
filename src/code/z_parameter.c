@@ -3055,9 +3055,29 @@ void Magic_DrawMeter(PlayState* play) {
                           ENVIRONMENT, TEXEL0, ENVIRONMENT, 0, 0, 0, PRIMITIVE);
         gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 0, 255);
 
+
+        // Dark blue background
+        gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 0, 0, 50,
+                        interfaceCtx->magicAlpha);
+
+        gDPLoadMultiBlock_4b(OVERLAY_DISP++, gMagicMeterFillTex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_I, 16, 16, 0,
+                                G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK,
+                                G_TX_NOLOD, G_TX_NOLOD);
+
+        //! TODO: find something better
+        {
+            s16 posX = WIDE_MULT(WIDE_INCR(R_MAGIC_FILL_X, 1), WIDE_GET_RATIO);
+            s16 posRx =
+                WIDE_MULT(WIDE_INCR((R_MAGIC_FILL_X + gSaveContext.magicCapacity), 1), WIDE_GET_RATIO);
+            gSPTextureRectangle(OVERLAY_DISP++, posX << 2, (magicMeterY + 3) << 2, posRx << 2,
+                                (magicMeterY + 10) << 2, G_TX_RENDERTILE, 0, 0, WIDE_DIV((1 << 10), WIDE_GET_RATIO),
+                                1 << 10);
+        }
+
+
         if (gSaveContext.magicState == MAGIC_STATE_METER_FLASH_2) {
             // Yellow part of the meter indicating the amount of magic to be subtracted
-            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 250, 250, 0, interfaceCtx->magicAlpha);
+            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 250, 250, 250, interfaceCtx->magicAlpha);
 
             gDPLoadMultiBlock_4b(OVERLAY_DISP++, gMagicMeterFillTex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_I, 16, 16, 0,
                                  G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK,
