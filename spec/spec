@@ -1145,6 +1145,12 @@ endseg
 #endif
 
 beginseg
+    name "ovl_Destructible_Bookshelves"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Destructible_Bookshelves/z_destructible_bookshelves.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Destructible_Bookshelves/ovl_Destructible_Bookshelves_reloc.o"
+endseg
+
+beginseg
     name "gameplay_keep"
     compress
     romalign 0x1000
@@ -4219,7 +4225,15 @@ beginseg
     number 6
 endseg
 
+beginseg
+    name "object_destructible_bookshelves"
+    romalign 0x1000
+    include "$(BUILD_DIR)/assets/objects/object_destructible_bookshelves/object_destructible_bookshelves.o"
+    number 6
+endseg
+
 #if !ENABLE_MM_TITLE_CARDS
+
 beginseg
     name "g_pn_01"
     compress
