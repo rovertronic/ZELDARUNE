@@ -4,7 +4,7 @@
  * Header Child Day (Default)
 */
 #define LENGTH_TITAN_ROOM_0_HEADER00_OBJECTLIST 2
-#define LENGTH_TITAN_ROOM_0_HEADER00_ACTORLIST 25
+#define LENGTH_TITAN_ROOM_0_HEADER00_ACTORLIST 26
 SceneCmd titan_room_0_header00[] = {
     SCENE_CMD_ROOM_SHAPE(&titan_room_0_shapeHeader),
     SCENE_CMD_ECHO_SETTINGS(0x00),
@@ -210,6 +210,14 @@ ActorEntry titan_room_0_header00_actorList[LENGTH_TITAN_ROOM_0_HEADER00_ACTORLIS
     {
         /* Actor ID   */ ACTOR_DESTRUCTIBLE_BOOKSHELVES,
         /* Position   */ { 400, 0, 400 },
+        /* Rotation   */ { DEG_TO_BINANG(0.000), DEG_TO_BINANG(0.000), DEG_TO_BINANG(0.000) },
+        /* Parameters */ 0x0000
+    },
+
+    // Custom Actor
+    {
+        /* Actor ID   */ ACTOR_DESTRUCTIBLE_BOOKSHELVES,
+        /* Position   */ { 0, 0, 0 },
         /* Rotation   */ { DEG_TO_BINANG(0.000), DEG_TO_BINANG(0.000), DEG_TO_BINANG(0.000) },
         /* Parameters */ 0x0000
     },

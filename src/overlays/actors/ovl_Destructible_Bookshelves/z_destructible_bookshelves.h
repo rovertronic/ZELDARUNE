@@ -10,7 +10,7 @@ struct Destructible_Bookshelves;
 typedef void (*Destructible_BookshelvesActionFunc)(struct Destructible_Bookshelves*, PlayState*);
 
 typedef struct Destructible_Bookshelves {
-    Actor actor;
+    DynaPolyActor dyna;
     Destructible_BookshelvesActionFunc actionFunc;
 } Destructible_Bookshelves;
 

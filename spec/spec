@@ -4235,6 +4235,7 @@ beginseg
     name "object_destructible_bookshelves"
     romalign 0x1000
     include "$(BUILD_DIR)/assets/objects/object_destructible_bookshelves/object_destructible_bookshelves.o"
+    include "$(BUILD_DIR)/assets/objects/object_destructible_bookshelves/gBookshelvesCollision_collision.o"
     number 6
 endseg
 
