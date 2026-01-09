@@ -21,7 +21,7 @@ void Titan_DoNothing(Titan* this, PlayState* play);
 
 ActorProfile Titan_Profile = {
     ACTOR_TITAN,
-    ACTORCAT_PROP,
+    ACTORCAT_ENEMY,
     FLAGS,
     OBJECT_TITAN,
     sizeof(Titan),
@@ -35,6 +35,9 @@ void Titan_Init(Actor* thisx, PlayState* play) {
     Titan* this = (Titan*)thisx;
 
     this->actionFunc = Titan_DoNothing;
+    thisx->focus.pos.y += 180.0f;
+
+    thisx->naviEnemyId = NAVI_ENEMY_TITAN;
 }
 
 void Titan_Destroy(Actor* thisx, PlayState* play) {
