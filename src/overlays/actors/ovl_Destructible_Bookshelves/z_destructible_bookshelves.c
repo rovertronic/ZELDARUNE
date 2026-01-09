@@ -6,8 +6,12 @@
 
 #include "z_destructible_bookshelves.h"
 
+#include "libc64/math64.h"
+#include "libc64/qrand.h"
+
 #include "play_state.h"
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
+
 
 #include "assets/objects/object_destructible_bookshelves/object_destructible_bookshelves.h"
 
@@ -36,6 +40,10 @@ void Destructible_Bookshelves_Init(Actor* thisx, PlayState* play) {
     Destructible_Bookshelves* this = (Destructible_Bookshelves*)thisx;
 
     this->actionFunc = Destructible_Bookshelves_DoNothing;
+
+    // Set random rotation
+    int randomRotation = Rand_ZeroOne() * 3.0f;
+    thisx->shape.rot.y = randomRotation * 0x4000;
 }
 
 void Destructible_Bookshelves_Destroy(Actor* thisx, PlayState* play) {

@@ -1151,6 +1151,12 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_Titan"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Titan/z_titan.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Titan/ovl_Titan_reloc.o"
+endseg
+
+beginseg
     name "gameplay_keep"
     compress
     romalign 0x1000
@@ -4229,6 +4235,13 @@ beginseg
     name "object_destructible_bookshelves"
     romalign 0x1000
     include "$(BUILD_DIR)/assets/objects/object_destructible_bookshelves/object_destructible_bookshelves.o"
+    number 6
+endseg
+
+beginseg
+    name "object_titan"
+    romalign 0x1000
+    include "$(BUILD_DIR)/assets/objects/object_titan/object_titan.o"
     number 6
 endseg
 
