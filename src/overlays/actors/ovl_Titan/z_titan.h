@@ -12,6 +12,10 @@ typedef void (*TitanActionFunc)(struct Titan*, PlayState*);
 typedef struct Titan {
     Actor actor;
     TitanActionFunc actionFunc;
+
+    SkelAnime skelAnime;
+    Vec3s jointTable[9];
+    Vec3s morphTable[9];
 } Titan;
 
 #endif

@@ -3,3 +3,5 @@
 Gfx gTitanDL[] = {
     gsSPEndDisplayList(),
 };
+
+#include "gTitanSkelanime.c"

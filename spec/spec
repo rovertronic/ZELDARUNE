@@ -4243,6 +4243,7 @@ beginseg
     name "object_titan"
     romalign 0x1000
     include "$(BUILD_DIR)/assets/objects/object_titan/object_titan.o"
+    include "$(BUILD_DIR)/assets/objects/object_titan/gTitanIdleAnim.o"
     number 6
 endseg
 
