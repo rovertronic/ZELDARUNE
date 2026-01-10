@@ -2745,11 +2745,11 @@ Gfx titan_room_0_dl_bg_mesh_layer_Transparent_tri_0[] = {
 };
 
 Gfx mat_titan_room_0_dl_f3dlite_material_002_layerOpaque[] = {
-	gsSPLoadGeometryMode(G_SHADING_SMOOTH | G_CULL_BACK | G_SHADE | G_ZBUFFER),
+	gsSPLoadGeometryMode(G_SHADE | G_CULL_BACK | G_ZBUFFER | G_SHADING_SMOOTH),
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
-	gsSPSetOtherMode(G_SETOTHERMODE_H, 4, 20, G_TP_PERSP | G_TT_NONE | G_TD_CLAMP | G_TC_FILT | G_PM_NPRIMITIVE | G_AD_NOISE | G_CYC_2CYCLE | G_CD_MAGICSQ | G_TL_TILE | G_CK_NONE | G_TF_BILERP),
-	gsSPSetOtherMode(G_SETOTHERMODE_L, 0, 32, G_RM_AA_ZB_OPA_SURF2 | G_RM_NOOP | G_AC_NONE | G_ZS_PIXEL),
+	gsSPSetOtherMode(G_SETOTHERMODE_H, 4, 20, G_TT_NONE | G_TD_CLAMP | G_CYC_2CYCLE | G_TL_TILE | G_CD_MAGICSQ | G_CK_NONE | G_TC_FILT | G_AD_NOISE | G_TP_PERSP | G_PM_NPRIMITIVE | G_TF_BILERP),
+	gsSPSetOtherMode(G_SETOTHERMODE_L, 0, 32, G_ZS_PIXEL | G_AC_NONE | G_RM_AA_ZB_OPA_SURF2 | G_RM_NOOP),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
 	gsDPSetTextureImage(G_IM_FMT_I, G_IM_SIZ_8b_LOAD_BLOCK, 1, titan_room_0_dl_uzu_i8),
@@ -2761,11 +2761,11 @@ Gfx mat_titan_room_0_dl_f3dlite_material_002_layerOpaque[] = {
 };
 
 Gfx mat_titan_room_0_dl_f3dlite_material_003_layerTransparent[] = {
-	gsSPLoadGeometryMode(G_SHADING_SMOOTH | G_SHADE | G_ZBUFFER),
+	gsSPLoadGeometryMode(G_SHADE | G_ZBUFFER | G_SHADING_SMOOTH),
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, COMBINED, 0, PRIMITIVE, 0, COMBINED, 0, SHADE, 0),
-	gsSPSetOtherMode(G_SETOTHERMODE_H, 4, 20, G_TP_PERSP | G_TT_NONE | G_TD_CLAMP | G_TC_FILT | G_PM_NPRIMITIVE | G_AD_NOISE | G_CYC_2CYCLE | G_CD_MAGICSQ | G_TL_TILE | G_CK_NONE | G_TF_BILERP),
-	gsSPSetOtherMode(G_SETOTHERMODE_L, 0, 32, G_RM_NOOP | G_AC_NONE | G_RM_AA_ZB_XLU_SURF2 | G_ZS_PIXEL),
+	gsSPSetOtherMode(G_SETOTHERMODE_H, 4, 20, G_TT_NONE | G_TD_CLAMP | G_CYC_2CYCLE | G_TL_TILE | G_CD_MAGICSQ | G_CK_NONE | G_TC_FILT | G_AD_NOISE | G_TP_PERSP | G_PM_NPRIMITIVE | G_TF_BILERP),
+	gsSPSetOtherMode(G_SETOTHERMODE_L, 0, 32, G_ZS_PIXEL | G_AC_NONE | G_RM_AA_ZB_XLU_SURF2 | G_RM_NOOP),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPSetPrimColor(0, 0, 255, 255, 255, 128),
 	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b_LOAD_BLOCK, 1, titan_room_0_dl_stainglass_rgba16),
@@ -2777,11 +2777,11 @@ Gfx mat_titan_room_0_dl_f3dlite_material_003_layerTransparent[] = {
 };
 
 Gfx mat_titan_room_0_dl_f3dlite_material_004_layerOpaque[] = {
-	gsSPLoadGeometryMode(G_SHADING_SMOOTH | G_SHADE | G_LIGHTING | G_TEXTURE_GEN | G_ZBUFFER | G_CULL_BACK),
+	gsSPLoadGeometryMode(G_LIGHTING | G_TEXTURE_GEN | G_SHADING_SMOOTH | G_SHADE | G_ZBUFFER | G_CULL_BACK),
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE_ALPHA, 0, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
-	gsSPSetOtherMode(G_SETOTHERMODE_H, 4, 20, G_TP_PERSP | G_TT_NONE | G_TD_CLAMP | G_TC_FILT | G_PM_NPRIMITIVE | G_AD_NOISE | G_CYC_2CYCLE | G_CD_MAGICSQ | G_TL_TILE | G_CK_NONE | G_TF_BILERP),
-	gsSPSetOtherMode(G_SETOTHERMODE_L, 0, 32, G_RM_AA_ZB_OPA_SURF2 | G_RM_NOOP | G_AC_NONE | G_ZS_PIXEL),
+	gsSPSetOtherMode(G_SETOTHERMODE_H, 4, 20, G_TT_NONE | G_TD_CLAMP | G_CYC_2CYCLE | G_TL_TILE | G_CD_MAGICSQ | G_CK_NONE | G_TC_FILT | G_AD_NOISE | G_TP_PERSP | G_PM_NPRIMITIVE | G_TF_BILERP),
+	gsSPSetOtherMode(G_SETOTHERMODE_L, 0, 32, G_ZS_PIXEL | G_AC_NONE | G_RM_AA_ZB_OPA_SURF2 | G_RM_NOOP),
 	gsSPTexture(1984, 1984, 0, 0, 1),
 	gsDPSetPrimColor(0, 0, 144, 176, 255, 255),
 	gsDPSetTextureImage(G_IM_FMT_I, G_IM_SIZ_8b_LOAD_BLOCK, 1, titan_room_0_dl_gold_i8),
@@ -2793,11 +2793,11 @@ Gfx mat_titan_room_0_dl_f3dlite_material_004_layerOpaque[] = {
 };
 
 Gfx mat_titan_room_0_dl_f3dlite_material_005_layerOpaque[] = {
-	gsSPLoadGeometryMode(G_SHADING_SMOOTH | G_CULL_BACK | G_SHADE | G_ZBUFFER),
+	gsSPLoadGeometryMode(G_SHADE | G_CULL_BACK | G_ZBUFFER | G_SHADING_SMOOTH),
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
-	gsSPSetOtherMode(G_SETOTHERMODE_H, 4, 20, G_TP_PERSP | G_TT_NONE | G_TD_CLAMP | G_TC_FILT | G_PM_NPRIMITIVE | G_AD_NOISE | G_CYC_2CYCLE | G_CD_MAGICSQ | G_TL_TILE | G_CK_NONE | G_TF_BILERP),
-	gsSPSetOtherMode(G_SETOTHERMODE_L, 0, 32, G_RM_AA_ZB_OPA_SURF2 | G_RM_NOOP | G_AC_NONE | G_ZS_PIXEL),
+	gsSPSetOtherMode(G_SETOTHERMODE_H, 4, 20, G_TT_NONE | G_TD_CLAMP | G_CYC_2CYCLE | G_TL_TILE | G_CD_MAGICSQ | G_CK_NONE | G_TC_FILT | G_AD_NOISE | G_TP_PERSP | G_PM_NPRIMITIVE | G_TF_BILERP),
+	gsSPSetOtherMode(G_SETOTHERMODE_L, 0, 32, G_ZS_PIXEL | G_AC_NONE | G_RM_AA_ZB_OPA_SURF2 | G_RM_NOOP),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
 	gsDPSetTextureImage(G_IM_FMT_I, G_IM_SIZ_8b_LOAD_BLOCK, 1, titan_room_0_dl_gaybook_i8),

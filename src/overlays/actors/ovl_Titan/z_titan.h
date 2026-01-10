@@ -16,6 +16,9 @@ typedef struct Titan {
     SkelAnime skelAnime;
     Vec3s jointTable[9];
     Vec3s morphTable[9];
+
+    ColliderCylinder collider;
+    ColliderCylinder colliderStar;
 } Titan;
 
 #endif

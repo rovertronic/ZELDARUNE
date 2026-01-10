@@ -12,6 +12,8 @@ typedef void (*Destructible_BookshelvesActionFunc)(struct Destructible_Bookshelv
 typedef struct Destructible_Bookshelves {
     DynaPolyActor dyna;
     Destructible_BookshelvesActionFunc actionFunc;
+    int action;
+    int timer;
 } Destructible_Bookshelves;
 
 #endif
