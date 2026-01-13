@@ -5,3 +5,5 @@ Gfx gTitanDL[] = {
 };
 
 #include "gTitanSkelanime.c"
+
+#include "gTitanShield.c"

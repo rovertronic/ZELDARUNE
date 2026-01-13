@@ -8,7 +8,7 @@
 
 extern u64 gTitanSkelanime_titanFace_i8[];
 extern u64 gTitanSkelanime_wing_i8[];
-extern Vtx gTitanSkelanime_body_mesh_layer_Opaque_vtx_0[233];
+extern Vtx gTitanSkelanime_body_mesh_layer_Opaque_vtx_0[234];
 extern Gfx gTitanSkelanime_body_mesh_layer_Opaque_tri_0[];
 extern Vtx gTitanSkelanime_wing1_mesh_layer_Opaque_vtx_0[405];
 extern Gfx gTitanSkelanime_wing1_mesh_layer_Opaque_tri_0[];

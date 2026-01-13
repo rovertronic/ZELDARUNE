@@ -27,7 +27,6 @@
 #include "play_state.h"
 #include "player.h"
 
-
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_UPDATE_CULLING_DISABLED)
 
 void Titan_Init(Actor* thisx, PlayState* play);
@@ -51,18 +50,18 @@ ActorProfile Titan_Profile = {
 
 static ColliderCylinderInit sCylinderInit = {
     {
-        COL_MATERIAL_TREE,
-        AT_NONE,
+        COL_MATERIAL_HIT6,
+        AT_ON | AT_TYPE_ENEMY,
         AC_ON | AC_HARD | AC_TYPE_PLAYER,
         OC1_ON | OC1_TYPE_ALL,
         OC2_TYPE_1,
         COLSHAPE_CYLINDER,
     },
     {
-        ELEM_MATERIAL_UNK5,
-        { 0x00000000, HIT_SPECIAL_EFFECT_NONE, 0x00 },
-        { 0x0FC0074A, HIT_BACKLASH_NONE, 0x00 },
-        ATELEM_NONE,
+        ELEM_MATERIAL_UNK0,
+        { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_NONE, 0x08 },
+        { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
+        ATELEM_ON | ATELEM_SFX_NORMAL,
         ACELEM_ON,
         OCELEM_ON,
     },
@@ -71,18 +70,18 @@ static ColliderCylinderInit sCylinderInit = {
 
 static ColliderCylinderInit sCylinderStarInit = {
     {
-        COL_MATERIAL_TREE,
-        AT_NONE,
+        COL_MATERIAL_METAL,
+        AT_ON | AT_TYPE_ENEMY,
         AC_ON | AC_HARD | AC_TYPE_PLAYER,
         OC1_ON | OC1_TYPE_ALL,
         OC2_TYPE_1,
         COLSHAPE_CYLINDER,
     },
     {
-        ELEM_MATERIAL_UNK5,
-        { 0x00000000, HIT_SPECIAL_EFFECT_NONE, 0x00 },
-        { 0x0FC0074A, HIT_BACKLASH_NONE, 0x00 },
-        ATELEM_NONE,
+        ELEM_MATERIAL_UNK0,
+        { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_NONE, 0x08 },
+        { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
+        ATELEM_ON | ATELEM_SFX_NORMAL,
         ACELEM_ON,
         OCELEM_ON,
     },
@@ -113,6 +112,8 @@ void Titan_Init(Actor* thisx, PlayState* play) {
 
     this->action = 0;
     this->timer = 0;
+
+    this->shield = 38;
 }
 
 void Titan_Destroy(Actor* thisx, PlayState* play) {
@@ -130,15 +131,6 @@ void Titan_Update(Actor* thisx, PlayState* play) {
 
     // Update anim
     SkelAnime_Update(&this->skelAnime);
-
-    // Update Collision
-    Collider_UpdateCylinder(&this->actor, &this->collider);
-    CollisionCheck_SetAC(play, &play->colChkCtx, &this->collider.base);
-    CollisionCheck_SetOC(play, &play->colChkCtx, &this->collider.base);
-
-    Collider_UpdateCylinder(&this->actor, &this->colliderStar);
-    this->colliderStar.dim.pos.z -= 100;
-    CollisionCheck_SetOC(play, &play->colChkCtx, &this->colliderStar.base);
 
     //Turn toward player
     s16 angleToPlayer = Actor_WorldYawTowardActor(&this->actor, &GET_PLAYER(play)->actor) - this->actor.world.rot.y;
@@ -164,7 +156,7 @@ void Titan_Update(Actor* thisx, PlayState* play) {
                 SfxSource_PlaySfxAtFixedWorldPos(play, &this->actor.world.pos, 20, NA_SE_EV_ROCK_BROKEN);
             }
 
-            if (this->timer > 140) {
+            if (this->timer > 220) {
                 this->action++;
             }
             break;
@@ -194,7 +186,37 @@ void Titan_Update(Actor* thisx, PlayState* play) {
                 this->action = 0;
             }
             break;
+        case 3://Disable shield
+            if (this->shield > 0) {
+                this->shield--;
+            }
+            break;
     }
+
+    // Collision
+
+    if (this->colliderStar.base.acFlags & AC_HIT) {
+        this->colliderStar.base.acFlags &= ~AC_HIT;
+        this->action = 3;
+    }
+
+    if (this->collider.base.acFlags & AC_HIT) {
+        this->collider.base.acFlags &= ~AC_HIT;
+        Actor_SetColorFilter(thisx, COLORFILTER_COLORFLAG_RED, 120, COLORFILTER_BUFFLAG_OPA, 80);
+
+    }
+
+    // Update Collision
+    Collider_UpdateCylinder(&this->actor, &this->collider);
+    CollisionCheck_SetAC(play, &play->colChkCtx, &this->collider.base);
+    CollisionCheck_SetOC(play, &play->colChkCtx, &this->collider.base);
+
+    Collider_UpdateCylinder(&this->actor, &this->colliderStar);
+    this->colliderStar.dim.pos.z += Math_CosS(thisx->world.rot.y) * 100;
+    this->colliderStar.dim.pos.x += Math_SinS(thisx->world.rot.y) * 100;
+    this->colliderStar.dim.pos.y += 100;
+    CollisionCheck_SetOC(play, &play->colChkCtx, &this->colliderStar.base);
+    CollisionCheck_SetAC(play, &play->colChkCtx, &this->colliderStar.base);
 
     // Inc Timer
     this->timer++;
@@ -203,8 +225,16 @@ void Titan_Update(Actor* thisx, PlayState* play) {
 void Titan_Draw(Actor* thisx, PlayState* play) {
     Titan* this = (Titan*)thisx;
 
+    OPEN_DISPS(play->state.gfxCtx);
+
     SkelAnime_DrawOpa(play, this->skelAnime.skeleton, this->skelAnime.jointTable,
                       NULL, NULL, this);
+
+    gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, this->shield );
+
+    Gfx_DrawDListOpa(play, gTitanShield_transparent_dl);
+
+    CLOSE_DISPS(play->state.gfxCtx);
 }
 
 void Titan_DoNothing(Titan* this, PlayState* play) {

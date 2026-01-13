@@ -8,3 +8,5 @@ extern Gfx gTitanDL[];
 #endif
 
 #include "gTitanSkelanime.h"
+
+#include "gTitanShield.h"
