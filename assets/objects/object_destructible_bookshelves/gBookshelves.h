@@ -7,7 +7,7 @@
 extern u64 gBookshelves_churchbookshelf_rgba16[];
 extern u64 gBookshelves_churchfloor_ci8[];
 extern u64 gBookshelves_churchfloor_pal_rgba16[];
-extern Vtx gBookshelves_gBookshelves_mesh_layer_Opaque_vtx_0[20];
+extern Vtx gBookshelves_gBookshelves_mesh_layer_Opaque_vtx_0[24];
 extern Gfx gBookshelves_gBookshelves_mesh_layer_Opaque_tri_0[];
 extern Vtx gBookshelves_gBookshelves_mesh_layer_Opaque_vtx_1[204];
 extern Gfx gBookshelves_gBookshelves_mesh_layer_Opaque_tri_1[];

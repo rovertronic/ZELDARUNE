@@ -108,36 +108,43 @@ u64 gBookshelves_churchfloor_pal_rgba16[] = {
 	0x42174a5b525b4219, 0x5a9f4a1939d54a59, 0x529d525d529f41d5, 0x41d7399300000000
 };
 
-Vtx gBookshelves_gBookshelves_mesh_layer_Opaque_vtx_0[20] = {
-	{{ {-10000, -20142, -10000}, 0, {2032, 1008}, {255, 255, 255, 255} }},
-	{{ {10000, -20142, -10000}, 0, {2032, -16}, {255, 255, 255, 255} }},
-	{{ {10000, -20142, 10000}, 0, {-16, -16}, {255, 255, 255, 255} }},
-	{{ {-10000, -20142, 10000}, 0, {-16, 1008}, {255, 255, 255, 255} }},
-	{{ {-9900, -20041, 9900}, 0, {2032, 2046}, {255, 255, 255, 255} }},
+Vtx gBookshelves_gBookshelves_mesh_layer_Opaque_vtx_0[24] = {
+	{{ {-9900, -10071, 9900}, 0, {2032, 1015}, {255, 255, 255, 255} }},
 	{{ {-9900, -101, 9900}, 0, {2032, -16}, {255, 255, 255, 255} }},
 	{{ {-9900, -101, -9900}, 0, {-16, -16}, {255, 255, 255, 255} }},
-	{{ {-9900, -20041, -9900}, 0, {-16, 2046}, {255, 255, 255, 255} }},
-	{{ {-9900, -20041, -9900}, 0, {2032, 2046}, {203, 203, 203, 255} }},
+	{{ {-9900, -10071, -9900}, 0, {-16, 1015}, {255, 255, 255, 255} }},
+	{{ {-9900, -20041, 9900}, 0, {2032, 2046}, {0, 0, 0, 255} }},
+	{{ {-9900, -20041, -9900}, 0, {-16, 2046}, {12, 12, 12, 255} }},
+	{{ {-9900, -10071, -9900}, 0, {2032, 1015}, {203, 203, 203, 255} }},
 	{{ {-9900, -101, -9900}, 0, {2032, -16}, {203, 203, 203, 255} }},
 	{{ {9900, -101, -9900}, 0, {-16, -16}, {203, 203, 203, 255} }},
-	{{ {9900, -20041, -9900}, 0, {-16, 2046}, {203, 203, 203, 255} }},
-	{{ {9900, -20041, -9900}, 0, {2032, 2046}, {255, 255, 255, 255} }},
+	{{ {9900, -10071, -9900}, 0, {-16, 1015}, {203, 203, 203, 255} }},
+	{{ {-9900, -20041, -9900}, 0, {2032, 2046}, {7, 7, 7, 255} }},
+	{{ {9900, -20041, -9900}, 0, {-16, 2046}, {0, 0, 0, 255} }},
+	{{ {9900, -10071, -9900}, 0, {2032, 1015}, {255, 255, 255, 255} }},
 	{{ {9900, -101, -9900}, 0, {2032, -16}, {255, 255, 255, 255} }},
 	{{ {9900, -101, 9900}, 0, {-16, -16}, {255, 255, 255, 255} }},
-	{{ {9900, -20041, 9900}, 0, {-16, 2046}, {255, 255, 255, 255} }},
-	{{ {9900, -20041, 9900}, 0, {2032, 2046}, {203, 203, 203, 255} }},
+	{{ {9900, -10071, 9900}, 0, {-16, 1015}, {255, 255, 255, 255} }},
+	{{ {9900, -20041, -9900}, 0, {2032, 2046}, {0, 0, 0, 255} }},
+	{{ {9900, -20041, 9900}, 0, {-16, 2046}, {4, 4, 4, 255} }},
+	{{ {9900, -10071, 9900}, 0, {2032, 1015}, {203, 203, 203, 255} }},
 	{{ {9900, -101, 9900}, 0, {2032, -16}, {203, 203, 203, 255} }},
 	{{ {-9900, -101, 9900}, 0, {-16, -16}, {203, 203, 203, 255} }},
-	{{ {-9900, -20041, 9900}, 0, {-16, 2046}, {203, 203, 203, 255} }},
+	{{ {-9900, -10071, 9900}, 0, {-16, 1015}, {203, 203, 203, 255} }},
+	{{ {9900, -20041, 9900}, 0, {2032, 2046}, {2, 2, 2, 255} }},
+	{{ {-9900, -20041, 9900}, 0, {-16, 2046}, {0, 0, 0, 255} }},
 };
 
 Gfx gBookshelves_gBookshelves_mesh_layer_Opaque_tri_0[] = {
-	gsSPVertex(gBookshelves_gBookshelves_mesh_layer_Opaque_vtx_0 + 0, 20, 0),
+	gsSPVertex(gBookshelves_gBookshelves_mesh_layer_Opaque_vtx_0 + 0, 24, 0),
 	gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-	gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
-	gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+	gsSP2Triangles(4, 0, 3, 0, 4, 3, 5, 0),
+	gsSP2Triangles(6, 7, 8, 0, 6, 8, 9, 0),
+	gsSP2Triangles(10, 6, 9, 0, 10, 9, 11, 0),
 	gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
-	gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+	gsSP2Triangles(16, 12, 15, 0, 16, 15, 17, 0),
+	gsSP2Triangles(18, 19, 20, 0, 18, 20, 21, 0),
+	gsSP2Triangles(22, 18, 21, 0, 22, 21, 23, 0),
 	gsSPEndDisplayList(),
 };
 
@@ -443,11 +450,11 @@ Gfx gBookshelves_gBookshelves_mesh_layer_Opaque_tri_1[] = {
 };
 
 Gfx mat_gBookshelves_f3dlite_material_layerOpaque[] = {
-	gsSPLoadGeometryMode(G_SHADING_SMOOTH | G_FOG | G_SHADE | G_CULL_BACK | G_ZBUFFER),
+	gsSPLoadGeometryMode(G_ZBUFFER | G_CULL_BACK | G_SHADE | G_FOG | G_SHADING_SMOOTH),
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
-	gsSPSetOtherMode(G_SETOTHERMODE_H, 4, 20, G_TP_PERSP | G_TT_NONE | G_TD_CLAMP | G_TC_FILT | G_PM_NPRIMITIVE | G_AD_NOISE | G_CYC_2CYCLE | G_CD_MAGICSQ | G_TL_TILE | G_CK_NONE | G_TF_BILERP),
-	gsSPSetOtherMode(G_SETOTHERMODE_L, 0, 32, G_RM_FOG_SHADE_A | G_RM_AA_ZB_OPA_SURF2 | G_AC_NONE | G_ZS_PIXEL),
+	gsSPSetOtherMode(G_SETOTHERMODE_H, 4, 20, G_PM_NPRIMITIVE | G_CK_NONE | G_TF_BILERP | G_TP_PERSP | G_TL_TILE | G_TT_NONE | G_TC_FILT | G_CYC_2CYCLE | G_CD_MAGICSQ | G_TD_CLAMP | G_AD_NOISE),
+	gsSPSetOtherMode(G_SETOTHERMODE_L, 0, 32, G_RM_FOG_SHADE_A | G_RM_AA_ZB_OPA_SURF2 | G_ZS_PIXEL | G_AC_NONE),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
 	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b_LOAD_BLOCK, 1, gBookshelves_churchbookshelf_rgba16),
@@ -459,11 +466,11 @@ Gfx mat_gBookshelves_f3dlite_material_layerOpaque[] = {
 };
 
 Gfx mat_gBookshelves_f3dlite_material_001_layerOpaque[] = {
-	gsSPLoadGeometryMode(G_SHADING_SMOOTH | G_FOG | G_SHADE | G_CULL_BACK | G_ZBUFFER),
+	gsSPLoadGeometryMode(G_ZBUFFER | G_CULL_BACK | G_SHADE | G_FOG | G_SHADING_SMOOTH),
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
-	gsSPSetOtherMode(G_SETOTHERMODE_H, 4, 20, G_TP_PERSP | G_TD_CLAMP | G_TC_FILT | G_PM_NPRIMITIVE | G_AD_NOISE | G_CYC_2CYCLE | G_TT_RGBA16 | G_CD_MAGICSQ | G_TL_TILE | G_CK_NONE | G_TF_BILERP),
-	gsSPSetOtherMode(G_SETOTHERMODE_L, 0, 32, G_RM_FOG_SHADE_A | G_RM_AA_ZB_OPA_SURF2 | G_AC_NONE | G_ZS_PIXEL),
+	gsSPSetOtherMode(G_SETOTHERMODE_H, 4, 20, G_PM_NPRIMITIVE | G_CK_NONE | G_TF_BILERP | G_TP_PERSP | G_TL_TILE | G_TT_RGBA16 | G_TC_FILT | G_CYC_2CYCLE | G_CD_MAGICSQ | G_TD_CLAMP | G_AD_NOISE),
+	gsSPSetOtherMode(G_SETOTHERMODE_L, 0, 32, G_RM_FOG_SHADE_A | G_RM_AA_ZB_OPA_SURF2 | G_ZS_PIXEL | G_AC_NONE),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
 	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gBookshelves_churchfloor_pal_rgba16),

@@ -28,7 +28,7 @@
 #include "player.h"
 
 
-#define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED)
+#define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_UPDATE_CULLING_DISABLED)
 
 void Titan_Init(Actor* thisx, PlayState* play);
 void Titan_Destroy(Actor* thisx, PlayState* play);

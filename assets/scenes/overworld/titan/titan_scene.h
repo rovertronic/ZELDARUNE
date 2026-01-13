@@ -57,7 +57,7 @@ extern u64 titan_room_0_dl_uzu_i8[];
 extern u64 titan_room_0_dl_stainglass_rgba16[];
 extern u64 titan_room_0_dl_gold_i8[];
 extern u64 titan_room_0_dl_gaybook_i8[];
-extern Vtx titan_room_0_dl_bg_mesh_layer_Opaque_vtx_0[519];
+extern Vtx titan_room_0_dl_bg_mesh_layer_Opaque_vtx_0[527];
 extern Gfx titan_room_0_dl_bg_mesh_layer_Opaque_tri_0[];
 extern Vtx titan_room_0_dl_bg_mesh_layer_Opaque_vtx_1[629];
 extern Gfx titan_room_0_dl_bg_mesh_layer_Opaque_tri_1[];
