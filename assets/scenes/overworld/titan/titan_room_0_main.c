@@ -323,8 +323,8 @@ ActorEntry titan_room_0_header00_actorList[LENGTH_TITAN_ROOM_0_HEADER00_ACTORLIS
     // Custom Actor
     {
         /* Actor ID   */ ACTOR_TITAN,
-        /* Position   */ { 0, 0, -691 },
-        /* Rotation   */ { DEG_TO_BINANG(0.000), DEG_TO_BINANG(0.000), DEG_TO_BINANG(0.000) },
+        /* Position   */ { 0, 0, 800 },
+        /* Rotation   */ { DEG_TO_BINANG(0.000), DEG_TO_BINANG(180.000), DEG_TO_BINANG(0.000) },
         /* Parameters */ 0x0000
     },
 };

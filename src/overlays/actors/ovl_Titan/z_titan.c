@@ -110,6 +110,9 @@ void Titan_Init(Actor* thisx, PlayState* play) {
 
     Collider_InitCylinder(play, &this->colliderStar);
     Collider_SetCylinder(play, &this->colliderStar, &this->actor, &sCylinderStarInit);
+
+    this->action = 0;
+    this->timer = 0;
 }
 
 void Titan_Destroy(Actor* thisx, PlayState* play) {
@@ -117,6 +120,7 @@ void Titan_Destroy(Actor* thisx, PlayState* play) {
 }
 
 void Titan_Update(Actor* thisx, PlayState* play) {
+    Player* player = GET_PLAYER(play);
     Titan* this = (Titan*)thisx;
 
     // Update focus
@@ -148,14 +152,52 @@ void Titan_Update(Actor* thisx, PlayState* play) {
     }
     thisx->shape.rot.y = this->actor.world.rot.y;
 
-    // Move
-    thisx->speed = 2.0f;
-    thisx->gravity = 0.0f;
-    thisx->world.pos.y = 0.0f;
-    Actor_MoveXZGravity(thisx);
+    // State Machine
+    switch(this->action) {
+        case 0:
+            // Move toward player
+            thisx->speed = 2.0f;
+            thisx->gravity = 0.0f;
+            thisx->world.pos.y = Math_SinS(this->timer * 0x888) * 5.0f;
+            Actor_MoveXZGravity(thisx);
+            if (this->timer % 30 == 0) {
+                SfxSource_PlaySfxAtFixedWorldPos(play, &this->actor.world.pos, 20, NA_SE_EV_ROCK_BROKEN);
+            }
 
+            if (this->timer > 140) {
+                this->action++;
+            }
+            break;
+        case 1:; // Spawn tites on bookshelves
+            int titecount = 0;
+            Actor* pointer = play->actorCtx.actorLists[ACTORCAT_BG].head;
+            while(pointer != NULL) {
+                if ((pointer->id == ACTOR_DESTRUCTIBLE_BOOKSHELVES) && (Rand_ZeroOne() > .9f)) {
+                    Actor_Spawn(&play->actorCtx, play,
+                    ACTOR_EN_TITE,
+                    pointer->world.pos.x, pointer->world.pos.y + 200.0f, pointer->world.pos.z, 
+                    0, 0, 0, 0);
+                    titecount++;
+                }
+                if (titecount > 4) {
+                    break;
+                }
+                pointer = pointer->next;
+            }
+            this->action++;
+            break;
+        case 2:;
+            // Wait for tites to despawn
 
-    thisx->world.pos.z -= 1.0f;
+            if (!Actor_Find(&play->actorCtx, ACTOR_EN_TITE, ACTORCAT_ENEMY)) {
+                this->timer = 0;
+                this->action = 0;
+            }
+            break;
+    }
+
+    // Inc Timer
+    this->timer++;
 }
 
 void Titan_Draw(Actor* thisx, PlayState* play) {

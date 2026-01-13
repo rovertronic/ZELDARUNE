@@ -29,6 +29,8 @@ void Destructible_Bookshelves_Draw(Actor* thisx, PlayState* play);
 
 void Destructible_Bookshelves_DoNothing(Destructible_Bookshelves* this, PlayState* play);
 
+int sDownedBookshelves = 0;
+
 ActorProfile Destructible_Bookshelves_Profile = {
     ACTOR_DESTRUCTIBLE_BOOKSHELVES,
     ACTORCAT_BG,
@@ -60,6 +62,9 @@ void Destructible_Bookshelves_Init(Actor* thisx, PlayState* play) {
     // Init my vars
     this->action = 0;
     this->timer = 0;
+
+    // I know this happens 16 times, but don't really have a better idea lol
+    sDownedBookshelves = 0;
 }
 
 void Destructible_Bookshelves_Destroy(Actor* thisx, PlayState* play) {
@@ -116,14 +121,35 @@ void Destructible_Bookshelves_Update(Actor* thisx, PlayState* play) {
     switch(this->action) {
         case 0:
             if (Actor_FindNearby(play, thisx, ACTOR_TITAN, ACTORCAT_ENEMY, 190.0f)) {
+                sDownedBookshelves++;
+
                 ObjBookshelves_BreakEffect(this, play);
 
-                this->action = 1;
+                this->action++;
                 thisx->world.pos.y -= 500.0f;
+                this->timer = 0;
             }
             break;
         case 1:
-
+            if (Actor_FindNearby(play, thisx, ACTOR_TITAN, ACTORCAT_ENEMY, 250.0f)) {
+                this->timer = 0;
+            }
+            if (sDownedBookshelves < 10) {
+                this->timer = 0;
+            }
+            if (this->timer > 200) {
+                if (Rand_ZeroOne() > .95f) {
+                    this->action++;
+                }
+                this->timer = 0;
+            }
+            break;
+        case 2:  //Rize bak up
+            thisx->world.pos.y *= .95f;
+            if (thisx->world.pos.y > -1.f) {
+                this->action = 0;
+                sDownedBookshelves--;
+            }
             break;
     }
 

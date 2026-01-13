@@ -205,7 +205,7 @@ void EnTite_Init(Actor* thisx, PlayState* play) {
     this->bodyBreak.val = BODYBREAK_STATUS_FINISHED;
     thisx->focus.pos = thisx->world.pos;
     thisx->focus.pos.y += 20.0f;
-    thisx->colChkInfo.health = 2;
+    thisx->colChkInfo.health = 6;
     thisx->colChkInfo.mass = MASS_HEAVY;
     Collider_InitJntSph(play, &this->collider);
     Collider_SetJntSph(play, &this->collider, thisx, &sJntSphInit, this->colliderElements);
@@ -263,7 +263,7 @@ void EnTite_Idle(EnTite* this, PlayState* play) {
     }
     if (this->vIdleTimer > 0) {
         this->vIdleTimer--;
-    } else if ((this->actor.xzDistToPlayer < 300.0f) && (this->actor.yDistToPlayer <= 80.0f)) {
+    } else if ((this->actor.xzDistToPlayer < 10000.0f) && (this->actor.yDistToPlayer <= 80.0f)) {
         EnTite_SetupTurnTowardPlayer(this);
     }
 }
@@ -977,6 +977,19 @@ void EnTite_Update(Actor* thisx, PlayState* play) {
 
     CollisionCheck_SetAC(play, &play->colChkCtx, &this->collider.base);
     CollisionCheck_SetOC(play, &play->colChkCtx, &this->collider.base);
+
+    if (thisx->world.pos.y < -150.0f) {
+        // respawn on random platform when falling
+        Actor* pointer = play->actorCtx.actorLists[ACTORCAT_BG].head;
+        while(pointer != NULL) {
+            if ((pointer->id == ACTOR_DESTRUCTIBLE_BOOKSHELVES) && (Rand_ZeroOne() > .9f)) {
+                thisx->world.pos = pointer->world.pos;
+                thisx->world.pos.y += 400.0f;
+                break;
+            }
+            pointer = pointer->next;
+        }
+    }
 }
 
 void EnTite_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** limbDList, Vec3s* rot, void* thisx) {

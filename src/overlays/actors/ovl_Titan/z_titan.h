@@ -19,6 +19,9 @@ typedef struct Titan {
 
     ColliderCylinder collider;
     ColliderCylinder colliderStar;
+
+    int timer;
+    int action;
 } Titan;
 
 #endif
