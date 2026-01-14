@@ -3,7 +3,7 @@
 /**
  * Header Child Day (Default)
 */
-#define LENGTH_TITAN_ROOM_0_HEADER00_OBJECTLIST 4
+#define LENGTH_TITAN_ROOM_0_HEADER00_OBJECTLIST 5
 #define LENGTH_TITAN_ROOM_0_HEADER00_ACTORLIST 38
 SceneCmd titan_room_0_header00[] = {
     SCENE_CMD_ROOM_SHAPE(&titan_room_0_shapeHeader),
@@ -21,6 +21,7 @@ s16 titan_room_0_header00_objectList[LENGTH_TITAN_ROOM_0_HEADER00_OBJECTLIST] = 
     OBJECT_TITAN,
     OBJECT_TITE,
     OBJECT_KIBAKO2,
+    OBJECT_DARKBUBBLE,
 };
 
 ActorEntry titan_room_0_header00_actorList[LENGTH_TITAN_ROOM_0_HEADER00_ACTORLIST] = {

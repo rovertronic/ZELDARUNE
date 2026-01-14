@@ -344,6 +344,8 @@ void Play_Init(GameState* thisx) {
     u8 baseSceneLayer;
     s32 pad[2];
 
+    this->titanGlobalHealth = 0;
+
 #if ENABLE_HACKER_DEBUG
     gDebug.play = this;
     gDebug.invDebug.state = INVEDITOR_STATE_OFF;

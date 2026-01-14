@@ -1157,6 +1157,12 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_Darkbubble"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Darkbubble/z_darkbubble.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Darkbubble/ovl_Darkbubble_reloc.o"
+endseg
+
+beginseg
     name "gameplay_keep"
     compress
     romalign 0x1000
@@ -4248,6 +4254,13 @@ beginseg
 endseg
 
 #if !ENABLE_MM_TITLE_CARDS
+
+beginseg
+    name "object_darkbubble"
+    romalign 0x1000
+    include "$(BUILD_DIR)/assets/objects/object_darkbubble/object_darkbubble.o"
+    number 6
+endseg
 
 beginseg
     name "g_pn_01"

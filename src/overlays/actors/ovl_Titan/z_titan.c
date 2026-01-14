@@ -163,6 +163,13 @@ void Titan_Update(Actor* thisx, PlayState* play) {
     Player* player = GET_PLAYER(play);
     Titan* this = (Titan*)thisx;
 
+    if (this->timer % 10 == 0) {
+        Actor_Spawn(&play->actorCtx, play,
+        ACTOR_DARKBUBBLE,
+        thisx->world.pos.x, thisx->world.pos.y, thisx->world.pos.z, 
+        0, 0, 0, 0);
+    }
+
     // Update focus
     thisx->focus.pos = thisx->world.pos;
     thisx->focus.pos.y += 140.0f;
