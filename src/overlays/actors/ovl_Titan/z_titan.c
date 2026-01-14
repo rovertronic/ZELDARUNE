@@ -36,6 +36,41 @@ void Titan_Draw(Actor* thisx, PlayState* play);
 
 void Titan_DoNothing(Titan* this, PlayState* play);
 
+static DamageTable sDamageTableStar[] = {
+    /* Deku nut      */ DMG_ENTRY(0, 0),
+    /* Deku stick    */ DMG_ENTRY(2, 0),
+    /* Slingshot     */ DMG_ENTRY(1, 0),
+    /* Explosive     */ DMG_ENTRY(2, 0),
+    /* Boomerang     */ DMG_ENTRY(0, 0),
+    /* Normal arrow  */ DMG_ENTRY(2, 0),
+    /* Hammer swing  */ DMG_ENTRY(2, 0),
+    /* Hookshot      */ DMG_ENTRY(0, 0),
+    /* Kokiri sword  */ DMG_ENTRY(1, 0),
+    /* Master sword  */ DMG_ENTRY(2, 0),
+    /* Giant's Knife */ DMG_ENTRY(4, 0),
+    /* Fire arrow    */ DMG_ENTRY(2, 0),
+    /* Ice arrow     */ DMG_ENTRY(4, 0),
+    /* Light arrow   */ DMG_ENTRY(2, 1),
+    /* Unk arrow 1   */ DMG_ENTRY(2, 0),
+    /* Unk arrow 2   */ DMG_ENTRY(2, 0),
+    /* Unk arrow 3   */ DMG_ENTRY(2, 0),
+    /* Fire magic    */ DMG_ENTRY(0, 0),
+    /* Ice magic     */ DMG_ENTRY(3, 0),
+    /* Light magic   */ DMG_ENTRY(0, 0),
+    /* Shield        */ DMG_ENTRY(0, 0),
+    /* Mirror Ray    */ DMG_ENTRY(0, 0),
+    /* Kokiri spin   */ DMG_ENTRY(1, 0),
+    /* Giant spin    */ DMG_ENTRY(4, 0),
+    /* Master spin   */ DMG_ENTRY(2, 0),
+    /* Kokiri jump   */ DMG_ENTRY(2, 0),
+    /* Giant jump    */ DMG_ENTRY(8, 0),
+    /* Master jump   */ DMG_ENTRY(4, 0),
+    /* Unknown 1     */ DMG_ENTRY(0, 0),
+    /* Unblockable   */ DMG_ENTRY(0, 0),
+    /* Hammer jump   */ DMG_ENTRY(4, 0),
+    /* Unknown 2     */ DMG_ENTRY(0, 0),
+};
+
 ActorProfile Titan_Profile = {
     ACTOR_TITAN,
     ACTORCAT_ENEMY,
@@ -195,9 +230,14 @@ void Titan_Update(Actor* thisx, PlayState* play) {
 
     // Collision
 
+    thisx->colChkInfo.damageTable = sDamageTableStar;
+
     if (this->colliderStar.base.acFlags & AC_HIT) {
-        this->colliderStar.base.acFlags &= ~AC_HIT;
-        this->action = 3;
+        if (thisx->colChkInfo.damageReaction == 1) {
+            Actor_ApplyDamage(thisx);
+            this->colliderStar.base.acFlags &= ~AC_HIT;
+            this->action = 3;
+        }
     }
 
     if (this->collider.base.acFlags & AC_HIT) {
@@ -215,8 +255,11 @@ void Titan_Update(Actor* thisx, PlayState* play) {
     this->colliderStar.dim.pos.z += Math_CosS(thisx->world.rot.y) * 100;
     this->colliderStar.dim.pos.x += Math_SinS(thisx->world.rot.y) * 100;
     this->colliderStar.dim.pos.y += 100;
-    CollisionCheck_SetOC(play, &play->colChkCtx, &this->colliderStar.base);
-    CollisionCheck_SetAC(play, &play->colChkCtx, &this->colliderStar.base);
+
+    if (this->shield > 0) {
+        CollisionCheck_SetOC(play, &play->colChkCtx, &this->colliderStar.base);
+        CollisionCheck_SetAC(play, &play->colChkCtx, &this->colliderStar.base);
+    }
 
     // Inc Timer
     this->timer++;

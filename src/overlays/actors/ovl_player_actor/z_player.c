@@ -1695,7 +1695,7 @@ static u8 sMagicSpellCosts[] = { 12, 24, 24, 12, 24, 12 };
 
 static u16 D_80854398[] = { NA_SE_IT_BOW_DRAW, NA_SE_IT_SLING_DRAW, NA_SE_IT_HOOKSHOT_READY };
 
-static u8 sMagicArrowCosts[] = { 4, 4, 8 };
+static u8 sMagicArrowCosts[] = { 4, 4, 16 };
 
 static LinkAnimationHeader* D_808543A4[] = {
     &gPlayerAnim_link_anchor_waitR2defense,
