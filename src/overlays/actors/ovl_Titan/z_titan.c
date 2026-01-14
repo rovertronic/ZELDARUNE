@@ -85,9 +85,9 @@ ActorProfile Titan_Profile = {
 
 static ColliderCylinderInit sCylinderInit = {
     {
-        COL_MATERIAL_HIT6,
+        COL_MATERIAL_HIT3,
         AT_ON | AT_TYPE_ENEMY,
-        AC_ON | AC_HARD | AC_TYPE_PLAYER,
+        AC_ON | AC_TYPE_PLAYER,
         OC1_ON | OC1_TYPE_ALL,
         OC2_TYPE_1,
         COLSHAPE_CYLINDER,
@@ -147,8 +147,12 @@ void Titan_Init(Actor* thisx, PlayState* play) {
 
     this->action = 0;
     this->timer = 0;
+    this->hittimer = 0;
+    this->phase = 0;
 
     this->shield = 38;
+
+    thisx->colChkInfo.health = 100;
 }
 
 void Titan_Destroy(Actor* thisx, PlayState* play) {
@@ -224,12 +228,29 @@ void Titan_Update(Actor* thisx, PlayState* play) {
         case 3://Disable shield
             if (this->shield > 0) {
                 this->shield--;
+            } else {
+                this->action = 4;
+            }
+            break;
+        case 4: // Vulnerable
+            if (thisx->colChkInfo.health < 100 - ((this->phase+1) * 25)) {
+                this->action = 5;
+                this->timer = 0;
+            }
+            break;
+        case 5://Enable Shield
+            if (this->shield < 38) {
+                this->shield++;
+            }
+            if (this->timer > 60) {
+                this->action = 0;
+                this->timer = 0;
+                this->phase ++;
             }
             break;
     }
 
     // Collision
-
     thisx->colChkInfo.damageTable = sDamageTableStar;
 
     if (this->colliderStar.base.acFlags & AC_HIT) {
@@ -241,20 +262,28 @@ void Titan_Update(Actor* thisx, PlayState* play) {
     }
 
     if (this->collider.base.acFlags & AC_HIT) {
+        this->hittimer = 0;
         this->collider.base.acFlags &= ~AC_HIT;
-        Actor_SetColorFilter(thisx, COLORFILTER_COLORFLAG_RED, 120, COLORFILTER_BUFFLAG_OPA, 80);
+
+        if (this->shield == 0) {
+            Actor_SetColorFilter(thisx, COLORFILTER_COLORFLAG_RED, 255, COLORFILTER_BUFFLAG_OPA, 8);
+            Actor_ApplyDamage(thisx);
+        }
 
     }
+    this->hittimer++;
 
     // Update Collision
     Collider_UpdateCylinder(&this->actor, &this->collider);
-    CollisionCheck_SetAC(play, &play->colChkCtx, &this->collider.base);
+    if (this->hittimer > 5) {
+        CollisionCheck_SetAC(play, &play->colChkCtx, &this->collider.base);
+    }
     CollisionCheck_SetOC(play, &play->colChkCtx, &this->collider.base);
 
     Collider_UpdateCylinder(&this->actor, &this->colliderStar);
     this->colliderStar.dim.pos.z += Math_CosS(thisx->world.rot.y) * 100;
     this->colliderStar.dim.pos.x += Math_SinS(thisx->world.rot.y) * 100;
-    this->colliderStar.dim.pos.y += 100;
+    this->colliderStar.dim.pos.y += 80;
 
     if (this->shield > 0) {
         CollisionCheck_SetOC(play, &play->colChkCtx, &this->colliderStar.base);
@@ -263,6 +292,8 @@ void Titan_Update(Actor* thisx, PlayState* play) {
 
     // Inc Timer
     this->timer++;
+
+    play->titanGlobalHealth = thisx->colChkInfo.health;
 }
 
 void Titan_Draw(Actor* thisx, PlayState* play) {

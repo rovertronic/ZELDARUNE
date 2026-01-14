@@ -137,6 +137,7 @@ typedef struct PlayState {
     ActorCsCamInfo* actorCsCamList;
     u8 actorCsUsed;
 #endif
+    s16 titanGlobalHealth;
 } PlayState; // size = 0x12518
 
 extern Mtx D_01000000; // billboardMtx

@@ -26,6 +26,7 @@
 #include "player.h"
 #include "save.h"
 #include "debug.h"
+#include "libc64/sprintf.h"
 
 #include "assets/textures/parameter_static/parameter_static.h"
 #include "assets/textures/do_action_static/do_action_static.h"
@@ -3005,6 +3006,10 @@ void Magic_DrawMeter(PlayState* play) {
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
     s16 magicMeterY;
 
+    //har titanhpstr[100];
+    //printf(titanhpstr,"TITAN %d",play->titanGlobalHealth);
+    //rint_Screen(&gDebug.printer, 10, 1, 0xDC0011, titanhpstr);
+
     OPEN_DISPS(play->state.gfxCtx, "../z_parameter.c", 2650);
 
     if (gSaveContext.save.info.playerData.magicLevel != 0
@@ -3027,6 +3032,55 @@ void Magic_DrawMeter(PlayState* play) {
 #endif
 
         Gfx_SetupDL_39Overlay(play->state.gfxCtx);
+
+        // BOSS TITAN HEALTH BAR!!!!
+
+        gDPPipeSync(OVERLAY_DISP++);
+        gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->magicAlpha);
+        gDPSetEnvColor(OVERLAY_DISP++, 100, 50, 50, 255);
+
+        //! TODO: find something better
+        {
+            OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterEndTex, 8, 16, WIDE_INCR(R_MAGIC_METER_X+60, -4),
+                                          magicMeterY, WIDE_INCR(8, -2), 16, 1 << 10, 1 << 10);
+        }
+
+        OVERLAY_DISP =
+            Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterMidTex, 24, 16, WIDE_INCR((R_MAGIC_METER_X+60 + 8), -6), magicMeterY,
+                           WIDE_MULT(gSaveContext.magicCapacity, WIDE_GET_RATIO), 16, 1 << 10, 1 << 10);
+
+        gDPLoadTextureBlock(OVERLAY_DISP++, gMagicMeterEndTex, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 16, 0,
+                            G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 3, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+
+        gSPTextureRectangle(
+            OVERLAY_DISP++,
+            WIDE_MULT(WIDE_INCR((R_MAGIC_METER_X+60 + 8 + gSaveContext.magicCapacity), 1), WIDE_GET_RATIO) << 2,
+            magicMeterY << 2, WIDE_MULT((R_MAGIC_METER_X+60 + 8 + gSaveContext.magicCapacity + 8), WIDE_GET_RATIO) << 2,
+            (magicMeterY + 16) << 2, G_TX_RENDERTILE, 256, 0, WIDE_DIV((1 << 10), WIDE_GET_RATIO), 1 << 10);
+
+        gDPPipeSync(OVERLAY_DISP++);
+
+        // nar
+        gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255,
+                        interfaceCtx->magicAlpha);
+
+        gDPLoadMultiBlock_4b(OVERLAY_DISP++, gMagicMeterFillTex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_I, 16, 16, 0,
+                                G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK,
+                                G_TX_NOLOD, G_TX_NOLOD);
+        gDPPipeSync(OVERLAY_DISP++);
+
+        {
+            s16 posX = WIDE_MULT(WIDE_INCR(R_MAGIC_FILL_X+60, 1), WIDE_GET_RATIO);
+            s16 posRx =
+                WIDE_MULT(WIDE_INCR((R_MAGIC_FILL_X+60 + (play->titanGlobalHealth/2) ), 1), WIDE_GET_RATIO);
+            gSPTextureRectangle(OVERLAY_DISP++, posX << 2, (magicMeterY + 3) << 2, posRx << 2,
+                                (magicMeterY + 10) << 2, G_TX_RENDERTILE, 0, 0, WIDE_DIV((1 << 10), WIDE_GET_RATIO),
+                                1 << 10);
+        }
+
+        /// BOSS TITAN HEALTH BAR END!!!
+
+
 
         gDPSetPrimColor(OVERLAY_DISP++, 0, 0, sMagicBorderR, sMagicBorderG, sMagicBorderB, interfaceCtx->magicAlpha);
         gDPSetEnvColor(OVERLAY_DISP++, 100, 50, 50, 255);

@@ -22,6 +22,8 @@ typedef struct Titan {
 
     int timer;
     int action;
+    int hittimer;
+    int phase;
 
     u8 shield;
 } Titan;

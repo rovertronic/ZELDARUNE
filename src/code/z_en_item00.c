@@ -1360,6 +1360,12 @@ void Item_DropCollectibleRandom(PlayState* play, Actor* fromActor, Vec3f* spawnP
         }
     }
 
+    if (Rand_ZeroOne() > .9f) {
+        dropId = ITEM00_ARROWS_MEDIUM;
+    } else {
+        dropId = ITEM00_MAGIC_SMALL;
+    }
+
     if (dropId != ITEM00_NONE) {
         dropQuantity = sDropQuantities[params + dropTableIndex];
         while (dropQuantity > 0) {
