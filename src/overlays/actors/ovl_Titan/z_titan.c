@@ -43,7 +43,7 @@ static DamageTable sDamageTableStar[] = {
     /* Deku nut      */ DMG_ENTRY(0, 0),
     /* Deku stick    */ DMG_ENTRY(2, 0),
     /* Slingshot     */ DMG_ENTRY(1, 0),
-    /* Explosive     */ DMG_ENTRY(2, 0),
+    /* Explosive     */ DMG_ENTRY(4, 0),
     /* Boomerang     */ DMG_ENTRY(0, 0),
     /* Normal arrow  */ DMG_ENTRY(2, 0),
     /* Hammer swing  */ DMG_ENTRY(2, 0),
