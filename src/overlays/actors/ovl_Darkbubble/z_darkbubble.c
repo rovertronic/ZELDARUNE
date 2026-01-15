@@ -8,16 +8,18 @@
 
 #include "play_state.h"
 
+#include "z_lib.h"
+#include "libc64/math64.h"
+#include "libc64/qrand.h"
+
 #include "assets/objects/object_darkbubble/object_darkbubble.h"
 
-#define FLAGS (0)
+#define FLAGS (ACTOR_FLAG_UPDATE_CULLING_DISABLED)
 
 void Darkbubble_Init(Actor* thisx, PlayState* play);
 void Darkbubble_Destroy(Actor* thisx, PlayState* play);
 void Darkbubble_Update(Actor* thisx, PlayState* play);
 void Darkbubble_Draw(Actor* thisx, PlayState* play);
-
-void Darkbubble_DoNothing(Darkbubble* this, PlayState* play);
 
 ActorProfile Darkbubble_Profile = {
     ACTOR_DARKBUBBLE,
@@ -33,8 +35,9 @@ ActorProfile Darkbubble_Profile = {
 
 void Darkbubble_Init(Actor* thisx, PlayState* play) {
     Darkbubble* this = (Darkbubble*)thisx;
-
-    this->actionFunc = Darkbubble_DoNothing;
+    this->timer = 0;
+    this->baseScale = 1.0f;
+    thisx->cullingVolumeDistance = 20000;
 }
 
 void Darkbubble_Destroy(Actor* thisx, PlayState* play) {
@@ -44,15 +47,21 @@ void Darkbubble_Destroy(Actor* thisx, PlayState* play) {
 void Darkbubble_Update(Actor* thisx, PlayState* play) {
     Darkbubble* this = (Darkbubble*)thisx;
 
-    this->actionFunc(this, play);
+    thisx->world.pos.y += 5.0f;
+    thisx->world.pos.x += Math_SinS(this->timer * 0x1000) * 10.0f;
+
+    thisx->scale.x = this->baseScale * (0.015f + (Math_SinS(this->timer * 0x300         ) * .005f) + (this->timer * .0001f));
+    thisx->scale.y = this->baseScale * (0.015f + (Math_CosS(this->timer * 0x700 + 0x2000) * .005f) + (this->timer * .0001f));
+    thisx->scale.z = this->baseScale * (0.015f + (Math_CosS(this->timer * 0x300         ) * .005f) + (this->timer * .0001f));
+
+    if (this->timer > 200) {
+        Actor_Kill(thisx);
+    }
+    this->timer++;
 }
 
 void Darkbubble_Draw(Actor* thisx, PlayState* play) {
     Darkbubble* this = (Darkbubble*)thisx;
 
     Gfx_DrawDListOpa(play, gDarkBubble_opaque_dl);
-}
-
-void Darkbubble_DoNothing(Darkbubble* this, PlayState* play) {
-
 }

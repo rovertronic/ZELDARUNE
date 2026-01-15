@@ -8,6 +8,7 @@
 
 #include "play_state.h"
 
+#include "overlays/actors/ovl_Darkbubble/z_darkbubble.h"
 #include "assets/objects/object_titan/object_titan.h"
 #include "assets/objects/object_titan/gTitanIdleAnim.h"
 #include "z_lib.h"
@@ -26,6 +27,8 @@
 #include "effect.h"
 #include "play_state.h"
 #include "player.h"
+#include "sram.h"
+#include "save.h"
 
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_UPDATE_CULLING_DISABLED)
 
@@ -151,6 +154,7 @@ void Titan_Init(Actor* thisx, PlayState* play) {
     this->phase = 0;
 
     this->shield = 38;
+    this->walkAnimTimer = 0;
 
     thisx->colChkInfo.health = 100;
 }
@@ -162,13 +166,6 @@ void Titan_Destroy(Actor* thisx, PlayState* play) {
 void Titan_Update(Actor* thisx, PlayState* play) {
     Player* player = GET_PLAYER(play);
     Titan* this = (Titan*)thisx;
-
-    if (this->timer % 10 == 0) {
-        Actor_Spawn(&play->actorCtx, play,
-        ACTOR_DARKBUBBLE,
-        thisx->world.pos.x, thisx->world.pos.y, thisx->world.pos.z, 
-        0, 0, 0, 0);
-    }
 
     // Update focus
     thisx->focus.pos = thisx->world.pos;
@@ -196,13 +193,21 @@ void Titan_Update(Actor* thisx, PlayState* play) {
             // Move toward player
             thisx->speed = 2.0f;
             thisx->gravity = 0.0f;
-            thisx->world.pos.y = Math_SinS(this->timer * 0x888) * 5.0f;
+
+            // Walk bob
+            this->walkAnimTimer++;
+            thisx->world.pos.y = Math_SinS(this->walkAnimTimer * 0x888) * 5.0f;
             Actor_MoveXZGravity(thisx);
             if (this->timer % 30 == 0) {
                 SfxSource_PlaySfxAtFixedWorldPos(play, &this->actor.world.pos, 20, NA_SE_EV_ROCK_BROKEN);
             }
 
-            if (this->timer > 220) {
+            // Do not spawn tites if magic is high
+            if (gSaveContext.save.info.playerData.magic > 40) {
+                this->timer = 0;
+            }
+
+            if (this->timer > 200) {
                 this->action++;
             }
             break;
@@ -295,6 +300,19 @@ void Titan_Update(Actor* thisx, PlayState* play) {
     if (this->shield > 0) {
         CollisionCheck_SetOC(play, &play->colChkCtx, &this->colliderStar.base);
         CollisionCheck_SetAC(play, &play->colChkCtx, &this->colliderStar.base);
+    }
+
+    // Shadow "Blood" the more damage it takes
+    if ((this->timer % 3 == 0) && (Rand_ZeroOne() > play->titanGlobalHealth * .01f)) {
+        s16 randAngle = Rand_ZeroOne() * 0xFFFF;
+
+        Darkbubble * darkBubble = (Darkbubble *)Actor_Spawn(&play->actorCtx, play,
+        ACTOR_DARKBUBBLE,
+        thisx->world.pos.x + Math_SinS(randAngle) * 80.0f , thisx->world.pos.y - 50.0f, thisx->world.pos.z + Math_CosS(randAngle) * 80.0f, 
+        0, 0, 0, 0);
+
+        darkBubble->baseScale = .5f;
+
     }
 
     // Inc Timer

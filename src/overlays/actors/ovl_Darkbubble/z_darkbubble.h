@@ -11,7 +11,8 @@ typedef void (*DarkbubbleActionFunc)(struct Darkbubble*, PlayState*);
 
 typedef struct Darkbubble {
     Actor actor;
-    DarkbubbleActionFunc actionFunc;
+    int timer;
+    f32 baseScale;
 } Darkbubble;
 
 #endif

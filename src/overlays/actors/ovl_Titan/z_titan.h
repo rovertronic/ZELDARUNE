@@ -21,6 +21,7 @@ typedef struct Titan {
     ColliderCylinder colliderStar;
 
     int timer;
+    int walkAnimTimer;
     int action;
     int hittimer;
     int phase;

@@ -1163,6 +1163,12 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_Darkbubbleemitter"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Darkbubbleemitter/z_darkbubbleemitter.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Darkbubbleemitter/ovl_Darkbubbleemitter_reloc.o"
+endseg
+
+beginseg
     name "gameplay_keep"
     compress
     romalign 0x1000
