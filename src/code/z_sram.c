@@ -147,7 +147,7 @@ static Inventory sNewSaveInventory = {
         ITEM_NONE, // SLOT_SLINGSHOT
         ITEM_NONE, // SLOT_OCARINA
         ITEM_NONE, // SLOT_BOMBCHU
-        ITEM_NONE, // SLOT_HOOKSHOT
+        ITEM_HOOKSHOT, // SLOT_HOOKSHOT
         ITEM_NONE, // SLOT_ARROW_ICE
         ITEM_NONE, // SLOT_FARORES_WIND
         ITEM_NONE, // SLOT_BOOMERANG
@@ -174,7 +174,7 @@ static Inventory sNewSaveInventory = {
         0, // SLOT_SLINGSHOT
         0, // SLOT_OCARINA
         0, // SLOT_BOMBCHU
-        0, // SLOT_HOOKSHOT
+        ITEM_HOOKSHOT, // SLOT_HOOKSHOT
         0, // SLOT_ARROW_ICE
         0, // SLOT_FARORES_WIND
         0, // SLOT_BOOMERANG
@@ -249,11 +249,11 @@ static SavePlayerData sDebugSavePlayerData = {
     }, // playerName
 #endif
     0,                  // n64ddFlag
-    0xE0,               // healthCapacity
-    0xE0,               // health
+    0x30*2,                  // healthCapacity
+    0x30*2,                  // health
     0,                  // magicLevel
     MAGIC_NORMAL_METER, // magic
-    150,                // rupees
+    0,                  // rupees
     8,                  // swordHealth
     0,                  // naviTimer
     true,               // isMagicAcquired
@@ -278,40 +278,40 @@ static SavePlayerData sDebugSavePlayerData = {
 };
 
 static ItemEquips sDebugSaveEquips = {
-    { ITEM_SWORD_MASTER, ITEM_BOW, ITEM_BOMB, ITEM_OCARINA_FAIRY }, // buttonItems
-    { SLOT_BOW, SLOT_BOMB, SLOT_OCARINA },                          // cButtonSlots
+    { ITEM_SWORD_MASTER, ITEM_BOW, ITEM_NONE, ITEM_NONE }, // buttonItems
+    { SLOT_BOW, ITEM_NONE, ITEM_NONE },                          // cButtonSlots
     // equipment
     (EQUIP_VALUE_SWORD_MASTER << (EQUIP_TYPE_SWORD * 4)) | (EQUIP_VALUE_SHIELD_HYLIAN << (EQUIP_TYPE_SHIELD * 4)) |
-        (EQUIP_VALUE_TUNIC_KOKIRI << (EQUIP_TYPE_TUNIC * 4)) | (EQUIP_VALUE_BOOTS_KOKIRI << (EQUIP_TYPE_BOOTS * 4)),
+        (EQUIP_VALUE_TUNIC_ZORA << (EQUIP_TYPE_TUNIC * 4)) | (EQUIP_VALUE_BOOTS_KOKIRI << (EQUIP_TYPE_BOOTS * 4)),
 };
 
 static Inventory sDebugSaveInventory = {
     // items
     {
-        ITEM_DEKU_STICK,          // SLOT_DEKU_STICK
-        ITEM_DEKU_NUT,            // SLOT_DEKU_NUT
+        ITEM_NONE,          // SLOT_DEKU_STICK
+        ITEM_NONE,            // SLOT_DEKU_NUT
         ITEM_BOMB,                // SLOT_BOMB
         ITEM_BOW,                 // SLOT_BOW
-        ITEM_ARROW_FIRE,          // SLOT_ARROW_FIRE
-        ITEM_DINS_FIRE,           // SLOT_DINS_FIRE
-        ITEM_SLINGSHOT,           // SLOT_SLINGSHOT
-        ITEM_OCARINA_FAIRY,       // SLOT_OCARINA
-        ITEM_BOMBCHU,             // SLOT_BOMBCHU
+        ITEM_NONE,          // SLOT_ARROW_FIRE
+        ITEM_NONE,           // SLOT_DINS_FIRE
+        ITEM_NONE,           // SLOT_SLINGSHOT
+        ITEM_NONE,       // SLOT_OCARINA
+        ITEM_NONE,             // SLOT_BOMBCHU
         ITEM_HOOKSHOT,            // SLOT_HOOKSHOT
-        ITEM_ARROW_ICE,           // SLOT_ARROW_ICE
-        ITEM_FARORES_WIND,        // SLOT_FARORES_WIND
-        ITEM_BOOMERANG,           // SLOT_BOOMERANG
-        ITEM_LENS_OF_TRUTH,       // SLOT_LENS_OF_TRUTH
-        ITEM_MAGIC_BEAN,          // SLOT_MAGIC_BEAN
-        ITEM_HAMMER,              // SLOT_HAMMER
+        ITEM_NONE,           // SLOT_ARROW_ICE
+        ITEM_NONE,        // SLOT_FARORES_WIND
+        ITEM_NONE,           // SLOT_BOOMERANG
+        ITEM_NONE,       // SLOT_LENS_OF_TRUTH
+        ITEM_NONE,          // SLOT_MAGIC_BEAN
+        ITEM_NONE,              // SLOT_HAMMER
         ITEM_ARROW_LIGHT,         // SLOT_ARROW_LIGHT
-        ITEM_NAYRUS_LOVE,         // SLOT_NAYRUS_LOVE
-        ITEM_BOTTLE_EMPTY,        // SLOT_BOTTLE_1
-        ITEM_BOTTLE_POTION_RED,   // SLOT_BOTTLE_2
-        ITEM_BOTTLE_POTION_GREEN, // SLOT_BOTTLE_3
-        ITEM_BOTTLE_POTION_BLUE,  // SLOT_BOTTLE_4
-        ITEM_POCKET_EGG,          // SLOT_TRADE_ADULT
-        ITEM_WEIRD_EGG,           // SLOT_TRADE_CHILD
+        ITEM_NONE,         // SLOT_NAYRUS_LOVE
+        ITEM_BOTTLE_POTION_RED,        // SLOT_BOTTLE_1
+        ITEM_BOTTLE_EMPTY,   // SLOT_BOTTLE_2
+        ITEM_BOTTLE_EMPTY, // SLOT_BOTTLE_3
+        ITEM_BOTTLE_EMPTY,  // SLOT_BOTTLE_4
+        ITEM_NONE,          // SLOT_TRADE_ADULT
+        ITEM_NONE,           // SLOT_TRADE_CHILD
     },
     // ammo
     {
@@ -333,17 +333,17 @@ static Inventory sDebugSaveInventory = {
         1   // SLOT_HAMMER
     },
     // equipment
-    ((((1 << EQUIP_INV_SWORD_KOKIRI) << (EQUIP_TYPE_SWORD * 4)) |
+    ((0 |
       ((1 << EQUIP_INV_SWORD_MASTER) << (EQUIP_TYPE_SWORD * 4)) |
       ((1 << EQUIP_INV_SWORD_BIGGORON) << (EQUIP_TYPE_SWORD * 4))) |
-     (((1 << EQUIP_INV_SHIELD_DEKU) << (EQUIP_TYPE_SHIELD * 4)) |
+     (0 |
       ((1 << EQUIP_INV_SHIELD_HYLIAN) << (EQUIP_TYPE_SHIELD * 4)) |
-      ((1 << EQUIP_INV_SHIELD_MIRROR) << (EQUIP_TYPE_SHIELD * 4))) |
-     (((1 << EQUIP_INV_TUNIC_KOKIRI) << (EQUIP_TYPE_TUNIC * 4)) |
-      ((1 << EQUIP_INV_TUNIC_GORON) << (EQUIP_TYPE_TUNIC * 4)) |
+      0) |
+     (0 |
+      0 |
       ((1 << EQUIP_INV_TUNIC_ZORA) << (EQUIP_TYPE_TUNIC * 4))) |
      (((1 << EQUIP_INV_BOOTS_KOKIRI) << (EQUIP_TYPE_BOOTS * 4)) |
-      ((1 << EQUIP_INV_BOOTS_IRON) << (EQUIP_TYPE_BOOTS * 4)) |
+      0 |
       ((1 << EQUIP_INV_BOOTS_HOVER) << (EQUIP_TYPE_BOOTS * 4)))),
     0x125249,                                                       // upgrades
     0x1E3FFFF,                                                      // questItems
@@ -845,7 +845,7 @@ void Sram_InitSave(FileSelectState* fileSelect, SramContext* sramCtx) {
     u16 j;
     u16* ptr;
     u16 checksum;
-
+/*
 #if IS_DEBUG_SAVE_ENABLED
     if (fileSelect->buttonIndex != 0) {
         Sram_InitNewSave();
@@ -855,9 +855,12 @@ void Sram_InitSave(FileSelectState* fileSelect, SramContext* sramCtx) {
 #else
     Sram_InitNewSave();
 #endif
+*/
+
+    Sram_InitDebugSave();
 
     gSaveContext.save.entranceIndex = ENTR_LINKS_HOUSE_0;
-    gSaveContext.save.linkAge = LINK_AGE_CHILD;
+    gSaveContext.save.linkAge = LINK_AGE_ADULT;
     gSaveContext.save.dayTime = CLOCK_TIME(10, 0);
     gSaveContext.save.cutsceneIndex = CS_INDEX_1;
 

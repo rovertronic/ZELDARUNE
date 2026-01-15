@@ -131,9 +131,12 @@ void Destructible_Bookshelves_Update(Actor* thisx, PlayState* play) {
             }
             break;
         case 1:
+            // Move up for dist check
+            thisx->world.pos.y = 0.0f;
             if (Actor_FindNearby(play, thisx, ACTOR_TITAN, ACTORCAT_ENEMY, 250.0f)) {
                 this->timer = 0;
             }
+            thisx->world.pos.y = -500.0f;
             if (sDownedBookshelves < 10) {
                 this->timer = 0;
             }

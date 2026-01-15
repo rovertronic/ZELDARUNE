@@ -47,7 +47,7 @@ static DamageTable sDamageTableStar[] = {
     /* Boomerang     */ DMG_ENTRY(0, 0),
     /* Normal arrow  */ DMG_ENTRY(2, 0),
     /* Hammer swing  */ DMG_ENTRY(2, 0),
-    /* Hookshot      */ DMG_ENTRY(0, 0),
+    /* Hookshot      */ DMG_ENTRY(2, 0),
     /* Kokiri sword  */ DMG_ENTRY(1, 0),
     /* Master sword  */ DMG_ENTRY(2, 0),
     /* Giant's Knife */ DMG_ENTRY(4, 0),
@@ -103,7 +103,7 @@ static ColliderCylinderInit sCylinderInit = {
         ACELEM_ON,
         OCELEM_ON,
     },
-    { 100, 200, 0, { 0, 0, 0 } },
+    { 100, 250, 0, { 0, 0, 0 } },
 };
 
 static ColliderCylinderInit sCylinderStarInit = {
@@ -222,7 +222,7 @@ void Titan_Update(Actor* thisx, PlayState* play) {
                     0, 0, 0, 0);
                     titecount++;
                 }
-                if (titecount > 4) {
+                if (titecount > 3) {
                     break;
                 }
                 pointer = pointer->next;
@@ -242,6 +242,7 @@ void Titan_Update(Actor* thisx, PlayState* play) {
                 this->shield--;
             } else {
                 this->action = 4;
+                this->timer = 0;
             }
             break;
         case 4: // Vulnerable
@@ -249,6 +250,11 @@ void Titan_Update(Actor* thisx, PlayState* play) {
                 this->action = 5;
                 this->timer = 0;
             }
+            // ehhh big maybe
+            //if (this->timer > 200) {
+            //    this->action = 5;
+            //    this->timer = 0;   
+            //}
             break;
         case 5://Enable Shield
             if (this->shield < 38) {
@@ -293,8 +299,8 @@ void Titan_Update(Actor* thisx, PlayState* play) {
     CollisionCheck_SetOC(play, &play->colChkCtx, &this->collider.base);
 
     Collider_UpdateCylinder(&this->actor, &this->colliderStar);
-    this->colliderStar.dim.pos.z += Math_CosS(thisx->world.rot.y) * 100;
-    this->colliderStar.dim.pos.x += Math_SinS(thisx->world.rot.y) * 100;
+    this->colliderStar.dim.pos.z += Math_CosS(thisx->world.rot.y) * 140;
+    this->colliderStar.dim.pos.x += Math_SinS(thisx->world.rot.y) * 140;
     this->colliderStar.dim.pos.y += 80;
 
     if (this->shield > 0) {
@@ -303,15 +309,15 @@ void Titan_Update(Actor* thisx, PlayState* play) {
     }
 
     // Shadow "Blood" the more damage it takes
-    if ((this->timer % 3 == 0) && (Rand_ZeroOne() > play->titanGlobalHealth * .01f)) {
+    if ((this->timer % 4 == 0) && (Rand_ZeroOne() > play->titanGlobalHealth * .01f)) {
         s16 randAngle = Rand_ZeroOne() * 0xFFFF;
 
         Darkbubble * darkBubble = (Darkbubble *)Actor_Spawn(&play->actorCtx, play,
         ACTOR_DARKBUBBLE,
-        thisx->world.pos.x + Math_SinS(randAngle) * 80.0f , thisx->world.pos.y - 50.0f, thisx->world.pos.z + Math_CosS(randAngle) * 80.0f, 
+        thisx->world.pos.x + Math_SinS(randAngle) * 80.0f , thisx->world.pos.y - 90.0f, thisx->world.pos.z + Math_CosS(randAngle) * 80.0f, 
         0, 0, 0, 0);
 
-        darkBubble->baseScale = .5f;
+        darkBubble->baseScale = .4f;
 
     }
 

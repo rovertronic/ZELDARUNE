@@ -54,7 +54,7 @@ void Darkbubble_Update(Actor* thisx, PlayState* play) {
     thisx->scale.y = this->baseScale * (0.015f + (Math_CosS(this->timer * 0x700 + 0x2000) * .005f) + (this->timer * .0001f));
     thisx->scale.z = this->baseScale * (0.015f + (Math_CosS(this->timer * 0x300         ) * .005f) + (this->timer * .0001f));
 
-    if (this->timer > 200) {
+    if (this->timer > 180) {
         Actor_Kill(thisx);
     }
     this->timer++;
