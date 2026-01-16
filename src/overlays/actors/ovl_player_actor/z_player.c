@@ -51,6 +51,7 @@
 #include "save.h"
 #include "skin_matrix.h"
 #include "z_debug.h"
+#include "sram.h"
 
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 #include "assets/objects/object_link_child/object_link_child.h"
@@ -4829,6 +4830,7 @@ s32 func_808382DC(Player* this, PlayState* play) {
 
     if (this->unk_A86 != 0) {
         if (!Player_InBlockingCsMode(play, this)) {
+            Sram_InitDebugSave();
             Player_InflictDamage(play, -9999);
             this->unk_A86 = 0;
         }

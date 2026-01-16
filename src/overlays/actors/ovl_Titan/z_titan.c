@@ -157,6 +157,11 @@ void Titan_Init(Actor* thisx, PlayState* play) {
     this->walkAnimTimer = 0;
 
     thisx->colChkInfo.health = 100;
+
+    Actor_Spawn(&play->actorCtx, play,
+    ACTOR_REDEYE,
+    thisx->world.pos.x, thisx->world.pos.y, thisx->world.pos.z, 
+    0, 0, 0, 0);
 }
 
 void Titan_Destroy(Actor* thisx, PlayState* play) {
@@ -211,7 +216,7 @@ void Titan_Update(Actor* thisx, PlayState* play) {
                 this->action++;
             }
             break;
-        case 1:; // Spawn tites on bookshelves
+        case 1:; // Spawn tites on bookshelves        
             int titecount = 0;
             Actor* pointer = play->actorCtx.actorLists[ACTORCAT_BG].head;
             while(pointer != NULL) {
@@ -262,7 +267,7 @@ void Titan_Update(Actor* thisx, PlayState* play) {
             if (this->shield < 38) {
                 this->shield++;
             }
-            if (this->timer > 60) {
+            if (this->timer > 40) {
                 this->action = 0;
                 this->timer = 0;
                 this->phase ++;
@@ -311,7 +316,17 @@ void Titan_Update(Actor* thisx, PlayState* play) {
     }
 
     // Shadow "Blood" the more damage it takes
-    if ((this->timer % 4 == 0) && (Rand_ZeroOne() > play->titanGlobalHealth * .01f)) {
+
+    int bubbleCount = 0;
+    Actor* pointer = play->actorCtx.actorLists[ACTORCAT_PROP].head;
+    while(pointer != NULL) {
+        if ((pointer->id == ACTOR_DARKBUBBLE)) {
+            bubbleCount++;
+        }
+        pointer = pointer->next;
+    }
+
+    if ((bubbleCount < 100) && (this->timer % 4 == 0) && (Rand_ZeroOne() > play->titanGlobalHealth * .01f)) {
         s16 randAngle = Rand_ZeroOne() * 0xFFFF;
 
         Darkbubble * darkBubble = (Darkbubble *)Actor_Spawn(&play->actorCtx, play,

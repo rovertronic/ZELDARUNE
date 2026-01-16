@@ -374,7 +374,7 @@ void Sram_InitDebugSave(void) {
     gSaveContext.save.info.inventory = sDebugSaveInventory;
     gSaveContext.save.info.checksum = sDebugSaveChecksum;
 
-    gSaveContext.save.info.horseData.sceneId = SCENE_HYRULE_FIELD;
+    gSaveContext.save.info.horseData.sceneId = SCENE_TITAN;
     gSaveContext.save.info.horseData.pos.x = -1840;
     gSaveContext.save.info.horseData.pos.y = 72;
     gSaveContext.save.info.horseData.pos.z = 5497;
@@ -401,7 +401,7 @@ void Sram_InitDebugSave(void) {
         }
     }
 
-    gSaveContext.save.entranceIndex = ENTR_HYRULE_FIELD_0;
+    gSaveContext.save.entranceIndex = ENTR_TITAN_0;
     gSaveContext.save.info.playerData.magicLevel = 0;
     gSaveContext.save.info.sceneFlags[SCENE_WATER_TEMPLE].swch = 0x40000000;
 }

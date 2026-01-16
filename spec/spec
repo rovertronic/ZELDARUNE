@@ -1169,6 +1169,12 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_Redeye"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Redeye/z_redeye.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Redeye/ovl_Redeye_reloc.o"
+endseg
+
+beginseg
     name "gameplay_keep"
     compress
     romalign 0x1000
@@ -4265,6 +4271,13 @@ beginseg
     name "object_darkbubble"
     romalign 0x1000
     include "$(BUILD_DIR)/assets/objects/object_darkbubble/object_darkbubble.o"
+    number 6
+endseg
+
+beginseg
+    name "object_redeye"
+    romalign 0x1000
+    include "$(BUILD_DIR)/assets/objects/object_redeye/object_redeye.o"
     number 6
 endseg
 
