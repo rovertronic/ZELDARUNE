@@ -191,7 +191,7 @@ void Titan_Update(Actor* thisx, PlayState* play) {
     switch(this->action) {
         case 0:
             // Move toward player
-            thisx->speed = 2.0f;
+            thisx->speed = 1.7f;
             thisx->gravity = 0.0f;
 
             // Walk bob
@@ -207,7 +207,7 @@ void Titan_Update(Actor* thisx, PlayState* play) {
                 this->timer = 0;
             }
 
-            if (this->timer > 200) {
+            if (this->timer > 180) {
                 this->action++;
             }
             break;

@@ -4829,7 +4829,7 @@ s32 func_808382DC(Player* this, PlayState* play) {
 
     if (this->unk_A86 != 0) {
         if (!Player_InBlockingCsMode(play, this)) {
-            Player_InflictDamage(play, -16);
+            Player_InflictDamage(play, -9999);
             this->unk_A86 = 0;
         }
     } else {
@@ -9446,6 +9446,7 @@ void func_80843AE8(PlayState* play, Player* this) {
         Player_PlaySfx(this, NA_SE_EV_FIATY_HEAL - SFX_FLAG);
         OnePointCutscene_Init(play, 9908, 125, &this->actor, CAM_ID_MAIN);
     } else if (play->gameOverCtx.state == GAMEOVER_DEATH_WAIT_GROUND) {
+        play->mainCamera.childCamId = 0;
         play->gameOverCtx.state = GAMEOVER_DEATH_DELAY_MENU;
     }
 }

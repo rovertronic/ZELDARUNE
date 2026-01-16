@@ -4203,6 +4203,7 @@ void KaleidoScope_Update(PlayState* play) {
                         AudioOcarina_SetInstrument(OCARINA_INSTRUMENT_OFF);
 #endif
                     } else if (CHECK_BTN_ALL(input->press.button, BTN_B) && !IS_INV_EDITOR_ACTIVE) {
+                        /*
                         pauseCtx->nextPageMode = 0;
                         pauseCtx->promptChoice = 0;
                         SFX_PLAY_CENTERED(NA_SE_SY_DECIDE);
@@ -4213,6 +4214,7 @@ void KaleidoScope_Update(PlayState* play) {
                         Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_ALL);
                         pauseCtx->savePromptState = PAUSE_SAVE_PROMPT_STATE_APPEARING;
                         pauseCtx->state = PAUSE_STATE_SAVE_PROMPT;
+                        */
                     }
                     break;
 
@@ -4248,6 +4250,7 @@ void KaleidoScope_Update(PlayState* play) {
                         pauseCtx->mainState = PAUSE_MAIN_STATE_IDLE;
                         break;
                     } else if (CHECK_BTN_ALL(input->press.button, BTN_B) && !IS_INV_EDITOR_ACTIVE) {
+                        /*
                         AudioOcarina_SetInstrument(OCARINA_INSTRUMENT_OFF);
                         pauseCtx->mainState = PAUSE_MAIN_STATE_IDLE;
                         pauseCtx->nextPageMode = 0;
@@ -4260,6 +4263,7 @@ void KaleidoScope_Update(PlayState* play) {
                         Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_ALL);
                         pauseCtx->savePromptState = PAUSE_SAVE_PROMPT_STATE_APPEARING;
                         pauseCtx->state = PAUSE_STATE_SAVE_PROMPT;
+                        */
                     } else if (pauseCtx->ocarinaStaff->state == pauseCtx->ocarinaSongIdx) {
                         // The player successfully played the song
                         SFX_PLAY_CENTERED(NA_SE_SY_TRE_BOX_APPEAR);
@@ -4299,6 +4303,7 @@ void KaleidoScope_Update(PlayState* play) {
                         func_800F64E0(0);
                         pauseCtx->mainState = PAUSE_MAIN_STATE_IDLE;
                     } else if (CHECK_BTN_ALL(input->press.button, BTN_B) && !IS_INV_EDITOR_ACTIVE) {
+                        /*
                         AudioOcarina_SetInstrument(OCARINA_INSTRUMENT_OFF);
                         pauseCtx->mainState = PAUSE_MAIN_STATE_IDLE;
                         pauseCtx->nextPageMode = 0;
@@ -4311,6 +4316,7 @@ void KaleidoScope_Update(PlayState* play) {
                         Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_ALL);
                         pauseCtx->savePromptState = PAUSE_SAVE_PROMPT_STATE_APPEARING;
                         pauseCtx->state = PAUSE_STATE_SAVE_PROMPT;
+                        */
                     }
                     break;
 
@@ -4445,6 +4451,9 @@ void KaleidoScope_Update(PlayState* play) {
             break;
 
         case PAUSE_STATE_GAME_OVER_INIT:
+            pauseCtx->state = PAUSE_STATE_GAME_OVER_FINISH;
+            break;
+
             pauseCtx->cursorSlot[PAUSE_MAP] = pauseCtx->cursorPoint[PAUSE_MAP] = pauseCtx->dungeonMapSlot =
                 VREG(30) + 3;
             R_PAUSE_BUTTON_LEFT_X = -175;
@@ -4582,7 +4591,7 @@ void KaleidoScope_Update(PlayState* play) {
         case PAUSE_STATE_GAME_OVER_WINDOW_DELAY:
             D_8082B260--;
             if (D_8082B260 == 0) {
-                pauseCtx->state = PAUSE_STATE_GAME_OVER_SHOW_WINDOW;
+                pauseCtx->state = PAUSE_STATE_GAME_OVER_FINISH;
             }
             break;
 
@@ -4718,6 +4727,7 @@ void KaleidoScope_Update(PlayState* play) {
 
         case PAUSE_STATE_GAME_OVER_FINISH:
             if (interfaceCtx->unk_244 != 255) {
+                play->mainCamera.childCamId = 0;
                 interfaceCtx->unk_244 += 10;
                 if (interfaceCtx->unk_244 >= 255) {
                     interfaceCtx->unk_244 = 255;

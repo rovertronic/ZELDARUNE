@@ -50,6 +50,9 @@ void Darkbubble_Update(Actor* thisx, PlayState* play) {
     thisx->world.pos.y += 5.0f;
     thisx->world.pos.x += Math_SinS(this->timer * 0x1000) * 10.0f;
 
+    thisx->world.pos.z += Rand_ZeroOne() - .5f;
+    thisx->world.pos.x += Rand_ZeroOne() - .5f;
+
     thisx->scale.x = this->baseScale * (0.015f + (Math_SinS(this->timer * 0x300         ) * .005f) + (this->timer * .0001f));
     thisx->scale.y = this->baseScale * (0.015f + (Math_CosS(this->timer * 0x700 + 0x2000) * .005f) + (this->timer * .0001f));
     thisx->scale.z = this->baseScale * (0.015f + (Math_CosS(this->timer * 0x300         ) * .005f) + (this->timer * .0001f));
