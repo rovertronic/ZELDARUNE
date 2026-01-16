@@ -232,8 +232,10 @@ void Titan_Update(Actor* thisx, PlayState* play) {
         case 2:;
             // Wait for tites to despawn
 
-            if (!Actor_Find(&play->actorCtx, ACTOR_EN_TITE, ACTORCAT_ENEMY)) {
+            if (Actor_Find(&play->actorCtx, ACTOR_EN_TITE, ACTORCAT_ENEMY)) {
                 this->timer = 0;
+            }
+            if (this->timer > 40) {
                 this->action = 0;
             }
             break;
