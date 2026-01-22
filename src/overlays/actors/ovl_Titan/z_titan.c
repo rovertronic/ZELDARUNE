@@ -29,6 +29,7 @@
 #include "player.h"
 #include "sram.h"
 #include "save.h"
+#include "segmented_address.h"
 
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_UPDATE_CULLING_DISABLED)
 
@@ -162,6 +163,9 @@ void Titan_Init(Actor* thisx, PlayState* play) {
     ACTOR_REDEYE,
     thisx->world.pos.x, thisx->world.pos.y, thisx->world.pos.z, 
     0, 0, 0, 0);
+
+    TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL(gTitanTitleCard), 160,
+                            180, 128, 40);
 }
 
 void Titan_Destroy(Actor* thisx, PlayState* play) {

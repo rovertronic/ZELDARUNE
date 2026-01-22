@@ -34,40 +34,13 @@ ActorProfile Redeye_Profile = {
     (ActorFunc)Redeye_Draw,
 };
 
-static ColliderJntSphElementInit sJntSphElementsInit[] = {
-    {
-        {
-            ELEM_MATERIAL_UNK0,
-            { 0x20000000, HIT_SPECIAL_EFFECT_NONE, 0x04 },
-            { 0x00000000, HIT_BACKLASH_NONE, 0x00 },
-            ATELEM_ON | ATELEM_SFX_NORMAL,
-            ACELEM_NONE,
-            OCELEM_ON,
-        },
-        { 0, { { 0, 0, 0 }, 58 }, 100 },
-    },
-};
-
-static ColliderJntSphInit sJntSphInit = {
-    {
-        COL_MATERIAL_NONE,
-        AT_ON | AT_TYPE_ENEMY,
-        AC_NONE,
-        OC1_ON | OC1_TYPE_ALL,
-        OC2_TYPE_2,
-        COLSHAPE_JNTSPH,
-    },
-    ARRAY_COUNT(sJntSphElementsInit),
-    sJntSphElementsInit,
-};
-
 void Redeye_Init(Actor* thisx, PlayState* play) {
     Redeye* this = (Redeye*)thisx;
 
-    Collider_InitJntSph(play, &this->collider);
-    Collider_SetJntSph(play, &this->collider, &this->actor, &sJntSphInit, this->colliderElements);
-    EnGoroiwa_UpdateCollider(this);
-    this->collider.elements[0].dim.worldSphere.radius = 58;
+    //Collider_InitJntSph(play, &this->collider);
+    //Collider_SetJntSph(play, &this->collider, &this->actor, &sJntSphInit, this->colliderElements);
+    //EnGoroiwa_UpdateCollider(this);
+    //this->collider.elements[0].dim.worldSphere.radius = 58;
 
     this->actionFunc = Redeye_DoNothing;
 }

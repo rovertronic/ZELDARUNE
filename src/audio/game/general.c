@@ -3500,6 +3500,10 @@ void Audio_SetSequenceMode(u8 seqMode) {
     u16 seqId;
     u8 volumeFadeOutTimer;
 
+    if (seqMode == SEQ_MODE_ENEMY) {
+        seqMode = SEQ_MODE_IGNORE;
+    }
+
 #if DEBUG_FEATURES
     sSeqModeInput = seqMode;
 #endif

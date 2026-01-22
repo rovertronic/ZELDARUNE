@@ -4,6 +4,7 @@
 #include "gfx.h"
 
 extern Gfx gTitanDL[];
+extern const u64 gTitanTitleCard[];
 
 #endif
 

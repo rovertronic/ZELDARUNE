@@ -1,0 +1,17 @@
+<Soundfont Name="Soundfont_MyAudioStream" Index="38" Medium="MEDIUM_CART" CachePolicy="CACHE_LOAD_TEMPORARY" SampleBank="$(BUILD_DIR)/assets/audio/samplebanks/SampleBank_0.xml">
+    <Envelopes>
+        <Envelope Name="Env0" Release="231">
+            <Point Delay="1" Arg="0"/>
+            <Point Delay="1" Arg="32700"/>
+            <Point Delay="32700" Arg="32700"/>
+        </Envelope>
+    </Envelopes>
+    <Samples>
+        <Sample Name="SAMPLE_0_MYAUDIOSTREAM_L"/>
+        <Sample Name="SAMPLE_0_MYAUDIOSTREAM_R"/>
+    </Samples>
+    <Instruments>
+        <Instrument ProgramNumber="0" Name="INST_0" Envelope="Env0" Sample="SAMPLE_0_MYAUDIOSTREAM_L"/>
+        <Instrument ProgramNumber="1" Name="INST_1" Envelope="Env0" Sample="SAMPLE_0_MYAUDIOSTREAM_R"/>
+    </Instruments>
+</Soundfont>

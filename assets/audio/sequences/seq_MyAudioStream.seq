@@ -1,0 +1,8 @@
+#include "aseq.h"
+#include "Soundfont_MyAudioStream.h"
+
+.startseq Sequence_MyAudioStream
+
+.incbin "MyAudioStream.aseq"
+
+.endseq Sequence_MyAudioStream

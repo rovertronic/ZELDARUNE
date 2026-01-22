@@ -13815,7 +13815,7 @@ s32 func_8084DFF4(PlayState* play, Player* this) {
             } else {
                 temp1 = temp2 = (this->getItemId == GI_HEART_PIECE) ? NA_BGM_SMALL_ITEM_GET : NA_BGM_ITEM_GET | 0x900;
             }
-            Audio_PlayFanfare(temp1);
+            //Audio_PlayFanfare(temp1);
         }
     } else {
         if (Message_GetState(&play->msgCtx) == TEXT_STATE_CLOSING) {
