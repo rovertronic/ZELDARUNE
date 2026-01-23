@@ -36,6 +36,9 @@
 #include "sequence.h"
 #include "sfx.h"
 
+#include "debug/print.h"
+#include "debug.h"
+
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_UPDATE_CULLING_DISABLED)
 
 void Titan_Init(Actor* thisx, PlayState* play);
@@ -52,7 +55,7 @@ static DamageTable sDamageTableStar[] = {
     /* Explosive     */ DMG_ENTRY(4, 0),
     /* Boomerang     */ DMG_ENTRY(0, 0),
     /* Normal arrow  */ DMG_ENTRY(2, 0),
-    /* Hammer swing  */ DMG_ENTRY(6, 2),
+    /* Hammer swing  */ DMG_ENTRY(12, 2),
     /* Hookshot      */ DMG_ENTRY(2, 0),
     /* Kokiri sword  */ DMG_ENTRY(1, 0),
     /* Master sword  */ DMG_ENTRY(2, 0),
@@ -213,6 +216,12 @@ void Titan_Update(Actor* thisx, PlayState* play) {
                 if (this->timer % 30 == 0) {
                     SfxSource_PlaySfxAtFixedWorldPos(play, &this->actor.world.pos, 20, NA_SE_EV_ROCK_BROKEN);
                 }
+            } else {
+                if (!Actor_FindNearby(play, thisx, ACTOR_DESTRUCTIBLE_BOOKSHELVES, ACTORCAT_BG, 165.0f)) {
+                    // Scootch up to booksehv
+                    thisx->speed = 1.7f;
+                    Actor_MoveXZGravity(thisx);
+                }
             }
 
             // Do not spawn tites if magic is high
@@ -306,7 +315,45 @@ void Titan_Update(Actor* thisx, PlayState* play) {
                 Actor_OfferGetItem(&this->actor, play, GI_HAMMER,10000.0f,10000.0f);
             }
             break;
+        case 8: //fucking daie
+            thisx->world.pos.y -= 1.0f;
+            if (this->timer % 5 == 0) {
+                Vec3f effVelocity = { 0.0f, 0.0f, 0.0f };
+                Vec3f bomb2Accel = { 0.0f, 0.1f, 0.0f };
+                Vec3f effAccel = { 0.0f, 0.0f, 0.0f };
+                Vec3f effPos = thisx->world.pos;
+                effPos.x += Rand_ZeroOne() * 100.0f - 50.0f;
+                effPos.y += Rand_ZeroOne() * 100.0f - 50.0f;
+                effPos.z += Rand_ZeroOne() * 100.0f - 50.0f;
+                EffectSsBomb2_SpawnLayered(play, &effPos, &effVelocity, &bomb2Accel, 200, (thisx->shape.rot.z * 6) + 19);
+
+                Actor_PlaySfx(thisx, NA_SE_IT_BOMB_EXPLOSION);
+            }
+            if (this->timer > 200) {
+
+                Print_Screen(&gDebug.printer, 2, 3+5, 0xDC0011, "Congrats, you have defeated the Titan.");
+                Print_Screen(&gDebug.printer, 2, 4+5, 0xD0D0FF, "Hack by: Rovertronic");
+                Print_Screen(&gDebug.printer, 2, 5+5, 0xD0D0FF, "Music by: The Rebellion Warrior");
+                Print_Screen(&gDebug.printer, 2, 6+5, 0xD0D0FF, "Streamed audio help: int128_t");
+                Print_Screen(&gDebug.printer, 2, 8+5, 0xD0D0FF, "Inspired by: DELTARUNE by Toby Fox");
+                Print_Screen(&gDebug.printer, 2, 10+5, 0xD0D0FF, "Made for: Hylian Modding Competition");
+                Print_Screen(&gDebug.printer, 2, 10+6, 0xD0D0FF, "2025 - Crossover");
+                Print_Screen(&gDebug.printer, 2, 10+8, 0xD0D0FF, "This is my first OOT hack, sorry");
+                Print_Screen(&gDebug.printer, 2, 10+9, 0xD0D0FF, "if some aspects sucked or were jank");
+                Print_Screen(&gDebug.printer, 2, 10+10, 0xD0D0FF, "also learned oot decomp in 2 weeks");
+            }
+            if (this->timer > 201) {
+                while(1){}
+            }
+            break;
     }
+
+    if (this->shield == 0 && thisx->colChkInfo.health <= 0) {
+        gSaveContext.save.info.playerData.magic = 50;
+        player->naviTextId = 0x065F;
+        thisx->naviEnemyId = NAVI_ENEMY_TITAN+2;
+    }
+
 
     // Collision
     thisx->colChkInfo.damageTable = sDamageTableStar;
@@ -330,6 +377,23 @@ void Titan_Update(Actor* thisx, PlayState* play) {
         if (this->shield == 0 && this->action != 6) {
             Actor_SetColorFilter(thisx, COLORFILTER_COLORFLAG_RED, 255, COLORFILTER_BUFFLAG_OPA, 8);
             Actor_ApplyDamage(thisx);
+        }
+
+        if (thisx->colChkInfo.damageReaction == 1 && this->shield == 0 && thisx->colChkInfo.health <= 0) {
+            // finished
+            this->action = 8;
+            this->timer = 0;
+
+            SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0, 0, NA_BGM_BOSS_CLEAR);
+
+            // kill all tites and redeyes
+            Actor* pointer = play->actorCtx.actorLists[ACTORCAT_ENEMY].head;
+            while(pointer != NULL) {
+                if ((pointer->id == ACTOR_EN_TITE)||(pointer->id == ACTOR_REDEYE)) {
+                    Actor_Kill(pointer);
+                }
+                pointer = pointer->next;
+            }
         }
 
     }

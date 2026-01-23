@@ -24,7 +24,7 @@ void Redeye_DoNothing(Redeye* this, PlayState* play);
 
 ActorProfile Redeye_Profile = {
     ACTOR_REDEYE,
-    ACTORCAT_PROP,
+    ACTORCAT_ENEMY,
     FLAGS,
     OBJECT_REDEYE,
     sizeof(Redeye),
