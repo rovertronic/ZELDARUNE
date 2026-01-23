@@ -12892,7 +12892,7 @@ BOX_BREAK
 "Music by:\n\
 The Rebellion Warrior"
 BOX_BREAK
-"Streamed audio help:\n\
+"Streamed audio & cutscene help:\n\
 xor"
 BOX_BREAK
 "Inspiration:\n\

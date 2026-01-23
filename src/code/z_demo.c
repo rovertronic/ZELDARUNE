@@ -50,6 +50,7 @@
 #include "assets/scenes/overworld/spot17/spot17_scene.h"
 #include "assets/scenes/overworld/spot18/spot18_scene.h"
 #include "assets/scenes/overworld/spot20/spot20_scene.h"
+#include "assets/scenes/overworld/titan/titan_scene.h"
 
 #include "assets/scenes/dungeons/bdan/bdan_scene.h"
 #include "assets/scenes/dungeons/ddan/ddan_scene.h"
@@ -142,6 +143,7 @@ EntranceCutscene sEntranceCutsceneTable[] = {
     { ENTR_GERUDOS_FORTRESS_17, 0, EVENTCHKINF_C7, gGerudoFortressFirstCaptureCs },
     { ENTR_DEATH_MOUNTAIN_CRATER_1, 2, EVENTCHKINF_B9, gDeathMountainCraterIntroCs },
     { ENTR_KOKIRI_FOREST_12, 2, EVENTCHKINF_C6, gKokiriForestDekuSproutPart3Cs },
+    //{ ENTR_TITAN_0, 2, EVENTCHKINF_C6, titanIntro},
 };
 
 void* sCutscenesUnknownList[] = {

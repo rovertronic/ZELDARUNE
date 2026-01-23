@@ -13,6 +13,7 @@
 #include "assets/objects/object_titan/gTitanIdleAnim.h"
 #include "assets/objects/object_titan/gTitanCoverAnim.h"
 #include "assets/objects/object_titan/gTitanunCoverAnim.h"
+#include "assets/scenes/overworld/titan/titan_scene.h"
 #include "z_lib.h"
 
 
@@ -35,6 +36,7 @@
 #include "seqcmd.h"
 #include "sequence.h"
 #include "sfx.h"
+#include "cutscene.h"
 
 #include "debug/print.h"
 #include "debug.h"
@@ -153,7 +155,7 @@ void Titan_Init(Actor* thisx, PlayState* play) {
     Collider_InitCylinder(play, &this->colliderStar);
     Collider_SetCylinder(play, &this->colliderStar, &this->actor, &sCylinderStarInit);
 
-    this->action = 0;
+    this->action = 10;
     this->timer = 0;
     this->hittimer = 0;
     this->phase = 0;
@@ -164,8 +166,9 @@ void Titan_Init(Actor* thisx, PlayState* play) {
 
     thisx->colChkInfo.health = 100;
 
-    TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL(gTitanTitleCard), 160,
-                            180, 128, 40);
+    this->actor.flags |= ACTOR_FLAG_FREEZE_EXCEPTION;
+    Cutscene_SetScript(play, titanIntro);
+    gSaveContext.cutsceneTrigger = 1;
 }
 
 void Titan_Destroy(Actor* thisx, PlayState* play) {
@@ -344,6 +347,18 @@ void Titan_Update(Actor* thisx, PlayState* play) {
                 Cutscene_StartManual(play, &play->csCtx);
                 Player_SetCsActionWithHaltedActors(play, &this->actor, PLAYER_CSACTION_57);
                 Message_StartTextbox(play, 0x0660, NULL);
+            }
+            break;
+        case 10: //introcutscene
+            if (this->timer == 110) {
+                SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0, 0, NA_BGM_MYAUDIOSTREAM);
+                TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL(gTitanTitleCard), 160,
+                                        180, 128, 40);
+            }
+            if (this->timer == 216) {
+                this->action = 0;
+                this->timer = 0;
+                this->actor.flags &= ~ACTOR_FLAG_FREEZE_EXCEPTION;
             }
             break;
     }

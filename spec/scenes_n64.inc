@@ -3916,6 +3916,7 @@ beginseg
     romalign 0x1000
     include "$(BUILD_DIR)/assets/scenes/overworld/titan/titan_scene_main.o"
     include "$(BUILD_DIR)/assets/scenes/overworld/titan/titan_scene_col.o"
+    include "$(BUILD_DIR)/assets/scenes/overworld/titan/titan_scene_cs_0.o"
     number 2
 endseg
 
