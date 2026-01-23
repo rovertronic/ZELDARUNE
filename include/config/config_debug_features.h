@@ -27,7 +27,7 @@
 
 /**** [NO CLIP] ****/
 // ``IS_NO_CLIP_ENABLED``
-#define ENABLE_NO_CLIP true
+#define ENABLE_NO_CLIP false
 
 /**** [INPUT DISPLAY] ****/
 // ``CAN_SHOW_INPUT_DISPLAY``
@@ -54,7 +54,7 @@
 
 /**** [MAP SELECT] ****/
 // ``IS_MAP_SELECT_ENABLED``
-#define ENABLE_MAP_SELECT true
+#define ENABLE_MAP_SELECT false
 
 /**** [DEBUG FILE 1] ****/
 // ``IS_DEBUG_SAVE_ENABLED``

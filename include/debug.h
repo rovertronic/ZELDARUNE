@@ -20,7 +20,7 @@
 #define COLOR_BLUE2 (0x0080FF)
 #define COLOR_BLUE3 (0x00BFFF)
 
-#define IS_INV_EDITOR_ACTIVE (IS_INV_EDITOR_ENABLED && gDebug.invDebug.state != INVEDITOR_STATE_OFF)
+#define IS_INV_EDITOR_ACTIVE 0//(IS_INV_EDITOR_ENABLED && gDebug.invDebug.state != INVEDITOR_STATE_OFF)
 
 typedef struct Debug {
     struct PlayState* play;

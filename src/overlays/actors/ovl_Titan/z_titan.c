@@ -36,8 +36,8 @@
 #include "sequence.h"
 #include "sfx.h"
 
-#include "debug/print.h"
-#include "debug.h"
+//#include "debug/print.h"
+//#include "debug.h"
 
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_UPDATE_CULLING_DISABLED)
 
@@ -332,18 +332,18 @@ void Titan_Update(Actor* thisx, PlayState* play) {
             }
             if (this->timer > 200) {
 
-                Print_Screen(&gDebug.printer, 2, 3+5, 0xDC0011, "Congrats, you have defeated the Titan.");
-                Print_Screen(&gDebug.printer, 2, 4+5, 0xD0D0FF, "Hack by: Rovertronic");
-                Print_Screen(&gDebug.printer, 2, 5+5, 0xD0D0FF, "Music by: The Rebellion Warrior");
-                Print_Screen(&gDebug.printer, 2, 6+5, 0xD0D0FF, "Streamed audio help: int128_t");
-                Print_Screen(&gDebug.printer, 2, 8+5, 0xD0D0FF, "Inspired by: DELTARUNE by Toby Fox");
-                Print_Screen(&gDebug.printer, 2, 10+5, 0xD0D0FF, "Made for: Hylian Modding Competition");
-                Print_Screen(&gDebug.printer, 2, 10+6, 0xD0D0FF, "2025 - Crossover");
-                Print_Screen(&gDebug.printer, 2, 10+8, 0xD0D0FF, "This is my first OOT hack, sorry");
-                Print_Screen(&gDebug.printer, 2, 10+9, 0xD0D0FF, "if some aspects sucked or were jank");
-                Print_Screen(&gDebug.printer, 2, 10+10, 0xD0D0FF, "also learned oot decomp in 2 weeks");
+                //Print_Screen(&gDebug.printer, 2, 3+5, 0xDC0011, "Congrats, you have defeated the Titan.");
+                //Print_Screen(&gDebug.printer, 2, 4+5, 0xD0D0FF, "Hack by: Rovertronic");
+                //Print_Screen(&gDebug.printer, 2, 5+5, 0xD0D0FF, "Music by: The Rebellion Warrior");
+                //Print_Screen(&gDebug.printer, 2, 6+5, 0xD0D0FF, "Streamed audio help: int128_t");
+                //Print_Screen(&gDebug.printer, 2, 8+5, 0xD0D0FF, "Inspired by: DELTARUNE by Toby Fox");
+                //Print_Screen(&gDebug.printer, 2, 10+5, 0xD0D0FF, "Made for: Hylian Modding Competition");
+                //Print_Screen(&gDebug.printer, 2, 10+6, 0xD0D0FF, "2025 - Crossover");
+                //Print_Screen(&gDebug.printer, 2, 10+8, 0xD0D0FF, "This is my first OOT hack, sorry");
+                //Print_Screen(&gDebug.printer, 2, 10+9, 0xD0D0FF, "if some aspects sucked or were jank");
+                //Print_Screen(&gDebug.printer, 2, 10+10, 0xD0D0FF, "also learned oot decomp in 2 weeks");
             }
-            if (this->timer > 201) {
+            if (this->timer > 202) {
                 while(1){}
             }
             break;
