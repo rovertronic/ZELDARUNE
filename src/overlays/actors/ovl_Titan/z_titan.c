@@ -275,6 +275,15 @@ void Titan_Update(Actor* thisx, PlayState* play) {
                     Animation_PlayOnce(&this->skelAnime, &gTitanSkelanimeGtitanskelanimecoverAnim);
                     this->action = 6;
                     SEQCMD_STOP_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0);
+
+                    // kill all tites and redeyes x2
+                    Actor* pointer = play->actorCtx.actorLists[ACTORCAT_ENEMY].head;
+                    while(pointer != NULL) {
+                        if ((pointer->id == ACTOR_EN_TITE)||(pointer->id == ACTOR_REDEYE)) {
+                            Actor_Kill(pointer);
+                        }
+                        pointer = pointer->next;
+                    }
                 }
             }
             break;
@@ -432,6 +441,13 @@ void Titan_Update(Actor* thisx, PlayState* play) {
 
         darkBubble->baseScale = .4f;
 
+    }
+
+    // Dont let player die during hammer phase
+    if (this->hammerphase) {
+        if (gSaveContext.save.info.playerData.health < 16) {
+            gSaveContext.save.info.playerData.health = 16;
+        }
     }
 
     // Inc Timer
