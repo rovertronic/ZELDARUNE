@@ -9448,8 +9448,10 @@ void func_80843AE8(PlayState* play, Player* this) {
         Player_PlaySfx(this, NA_SE_EV_FIATY_HEAL - SFX_FLAG);
         OnePointCutscene_Init(play, 9908, 125, &this->actor, CAM_ID_MAIN);
     } else if (play->gameOverCtx.state == GAMEOVER_DEATH_WAIT_GROUND) {
-        play->mainCamera.childCamId = 0;
-        play->gameOverCtx.state = GAMEOVER_DEATH_DELAY_MENU;
+        play->nextEntranceIndex = gSaveContext.save.entranceIndex;
+        play->transitionTrigger = TRANS_TRIGGER_START;
+        play->transitionType = TRANS_TYPE_FADE_BLACK;
+        gSaveContext.save.info.playerData.health = gSaveContext.save.info.playerData.healthCapacity;
     }
 }
 

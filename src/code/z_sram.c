@@ -379,6 +379,7 @@ void Sram_InitDebugSave(void) {
     gSaveContext.save.info.horseData.pos.y = 72;
     gSaveContext.save.info.horseData.pos.z = 5497;
     gSaveContext.save.info.horseData.angle = -0x6AD9;
+    /*
     gSaveContext.save.info.infTable[INFTABLE_INDEX_0] |= INFTABLE_MASK(INFTABLE_00) | INFTABLE_MASK(INFTABLE_03) |
                                                          INFTABLE_MASK(INFTABLE_0C) | INFTABLE_MASK(INFTABLE_0E);
 
@@ -390,6 +391,7 @@ void Sram_InitDebugSave(void) {
 
     SET_EVENTCHKINF(EVENTCHKINF_80);
     SET_EVENTCHKINF(EVENTCHKINF_C4);
+    */
 
     if (LINK_AGE_IN_YEARS == YEARS_CHILD) {
         gSaveContext.save.info.equips.buttonItems[0] = ITEM_SWORD_KOKIRI;

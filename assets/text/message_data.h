@@ -1325,10 +1325,10 @@ COLOR(YELLOW) "[C]" COLOR(DEFAULT) "でたたいて　ブっこわせ！\n"
 )
 ,
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_HAMMER) QUICKTEXT_ENABLE "You found the " COLOR(RED) "Megaton Hammer" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+UNSKIPPABLE ITEM_ICON(ITEM_HAMMER) QUICKTEXT_ENABLE "You found the " COLOR(RED) "Justice Hammer" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 "Press " COLOR(YELLOW) "[C]" COLOR(DEFAULT) " to smash and break \n"
-"junk! It's so heavy, you need to \n"
-"use two hands to swing it!"
+"junk!\n"
+"Need a hand?"
 )
 ,
 MSG(/* MISSING */)
@@ -12842,6 +12842,21 @@ QUICKTEXT_ENABLE "Titan\n"
 COLOR(LIGHTBLUE) "Embodiment of the fear of the dark.\n\
 To disable its shield, expose it\n\
 to " COLOR(YELLOW) "LIGHT." COLOR(DEFAULT) QUICKTEXT_DISABLE
+)
+,
+MSG(/* MISSING */)
+,
+MSG(/* MISSING */)
+)
+
+DEFINE_MESSAGE(0x065E, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(/* MISSING */)
+,
+MSG(
+QUICKTEXT_ENABLE "Titan\n"
+COLOR(LIGHTBLUE) "Now's your chance!\n\
+Smash its shield with your hammer\n\
+and finish it off!"
 )
 ,
 MSG(/* MISSING */)

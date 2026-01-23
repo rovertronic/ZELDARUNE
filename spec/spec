@@ -4264,6 +4264,8 @@ beginseg
     romalign 0x1000
     include "$(BUILD_DIR)/assets/objects/object_titan/object_titan.o"
     include "$(BUILD_DIR)/assets/objects/object_titan/gTitanIdleAnim.o"
+    include "$(BUILD_DIR)/assets/objects/object_titan/gTitanCoverAnim.o"
+    include "$(BUILD_DIR)/assets/objects/object_titan/gTitanunCoverAnim.o"
     number 6
 endseg
 

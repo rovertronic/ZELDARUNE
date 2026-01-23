@@ -2642,7 +2642,7 @@ void Actor_Draw(PlayState* play, Actor* actor) {
         Color_RGBA8 color = { 0, 0, 0, 255 };
 
         if (actor->colorFilterParams & COLORFILTER_COLORFLAG_GRAY) {
-            color.r = color.g = color.b = COLORFILTER_GET_COLORINTENSITY(actor->colorFilterParams) | 7;
+            color.g = COLORFILTER_GET_COLORINTENSITY(actor->colorFilterParams) | 7;
         } else if (actor->colorFilterParams & COLORFILTER_COLORFLAG_RED) {
             color.r = COLORFILTER_GET_COLORINTENSITY(actor->colorFilterParams) | 7;
         } else {

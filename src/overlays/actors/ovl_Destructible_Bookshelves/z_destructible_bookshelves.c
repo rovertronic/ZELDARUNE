@@ -120,7 +120,7 @@ void Destructible_Bookshelves_Update(Actor* thisx, PlayState* play) {
 
     switch(this->action) {
         case 0:
-            if (Actor_FindNearby(play, thisx, ACTOR_TITAN, ACTORCAT_ENEMY, 190.0f)) {
+            if (Actor_FindNearby(play, thisx, ACTOR_TITAN, ACTORCAT_ENEMY, 160.0f)) {
                 sDownedBookshelves++;
 
                 ObjBookshelves_BreakEffect(this, play);

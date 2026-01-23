@@ -11,6 +11,8 @@
 #include "overlays/actors/ovl_Darkbubble/z_darkbubble.h"
 #include "assets/objects/object_titan/object_titan.h"
 #include "assets/objects/object_titan/gTitanIdleAnim.h"
+#include "assets/objects/object_titan/gTitanCoverAnim.h"
+#include "assets/objects/object_titan/gTitanunCoverAnim.h"
 #include "z_lib.h"
 
 
@@ -30,6 +32,9 @@
 #include "sram.h"
 #include "save.h"
 #include "segmented_address.h"
+#include "seqcmd.h"
+#include "sequence.h"
+#include "sfx.h"
 
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_UPDATE_CULLING_DISABLED)
 
@@ -47,7 +52,7 @@ static DamageTable sDamageTableStar[] = {
     /* Explosive     */ DMG_ENTRY(4, 0),
     /* Boomerang     */ DMG_ENTRY(0, 0),
     /* Normal arrow  */ DMG_ENTRY(2, 0),
-    /* Hammer swing  */ DMG_ENTRY(2, 0),
+    /* Hammer swing  */ DMG_ENTRY(6, 2),
     /* Hookshot      */ DMG_ENTRY(2, 0),
     /* Kokiri sword  */ DMG_ENTRY(1, 0),
     /* Master sword  */ DMG_ENTRY(2, 0),
@@ -71,7 +76,7 @@ static DamageTable sDamageTableStar[] = {
     /* Master jump   */ DMG_ENTRY(4, 0),
     /* Unknown 1     */ DMG_ENTRY(0, 0),
     /* Unblockable   */ DMG_ENTRY(0, 0),
-    /* Hammer jump   */ DMG_ENTRY(4, 0),
+    /* Hammer jump   */ DMG_ENTRY(12, 2),
     /* Unknown 2     */ DMG_ENTRY(0, 0),
 };
 
@@ -104,7 +109,7 @@ static ColliderCylinderInit sCylinderInit = {
         ACELEM_ON,
         OCELEM_ON,
     },
-    { 100, 250, 0, { 0, 0, 0 } },
+    { 140, 250, 0, { 0, 0, 0 } },
 };
 
 static ColliderCylinderInit sCylinderStarInit = {
@@ -132,10 +137,6 @@ void Titan_Init(Actor* thisx, PlayState* play) {
 
     this->actionFunc = Titan_DoNothing;
 
-    thisx->focus.pos = thisx->world.pos;
-    thisx->focus.pos.y += 150.0f;
-    thisx->focus.pos.z -= 20.0f;
-
     thisx->attentionRangeType = ATTENTION_RANGE_4;
 
     SkelAnime_Init(play, &this->skelAnime, &gTitanSkelanime, &gTitanSkelanimeGtitanskelanimeactionAnim,
@@ -153,6 +154,7 @@ void Titan_Init(Actor* thisx, PlayState* play) {
     this->timer = 0;
     this->hittimer = 0;
     this->phase = 0;
+    this->hammerphase = 0;
 
     this->shield = 38;
     this->walkAnimTimer = 0;
@@ -200,15 +202,17 @@ void Titan_Update(Actor* thisx, PlayState* play) {
     switch(this->action) {
         case 0:
             // Move toward player
-            thisx->speed = 1.7f;
-            thisx->gravity = 0.0f;
+            if (this->hammerphase == 0) {
+                thisx->speed = 1.7f;
+                thisx->gravity = 0.0f;
 
-            // Walk bob
-            this->walkAnimTimer++;
-            thisx->world.pos.y = Math_SinS(this->walkAnimTimer * 0x888) * 5.0f;
-            Actor_MoveXZGravity(thisx);
-            if (this->timer % 30 == 0) {
-                SfxSource_PlaySfxAtFixedWorldPos(play, &this->actor.world.pos, 20, NA_SE_EV_ROCK_BROKEN);
+                // Walk bob
+                this->walkAnimTimer++;
+                thisx->world.pos.y = Math_SinS(this->walkAnimTimer * 0x888) * 5.0f;
+                Actor_MoveXZGravity(thisx);
+                if (this->timer % 30 == 0) {
+                    SfxSource_PlaySfxAtFixedWorldPos(play, &this->actor.world.pos, 20, NA_SE_EV_ROCK_BROKEN);
+                }
             }
 
             // Do not spawn tites if magic is high
@@ -257,15 +261,18 @@ void Titan_Update(Actor* thisx, PlayState* play) {
             }
             break;
         case 4: // Vulnerable
+            if (this->hammerphase) {
+                break;
+            }
             if (thisx->colChkInfo.health < 100 - ((this->phase+1) * 25)) {
                 this->action = 5;
                 this->timer = 0;
+                if (this->phase == 0) {
+                    Animation_PlayOnce(&this->skelAnime, &gTitanSkelanimeGtitanskelanimecoverAnim);
+                    this->action = 6;
+                    SEQCMD_STOP_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0);
+                }
             }
-            // ehhh big maybe
-            //if (this->timer > 200) {
-            //    this->action = 5;
-            //    this->timer = 0;   
-            //}
             break;
         case 5://Enable Shield
             if (this->shield < 38) {
@@ -275,6 +282,28 @@ void Titan_Update(Actor* thisx, PlayState* play) {
                 this->action = 0;
                 this->timer = 0;
                 this->phase ++;
+            }
+            break;
+        case 6://Recover uhoh
+            if (this->timer % 60 == 0) {
+                thisx->colChkInfo.health += 10;
+                Actor_SetColorFilter(thisx, COLORFILTER_COLORFLAG_GRAY, 255, COLORFILTER_BUFFLAG_OPA, 8);
+                SfxSource_PlaySfxAtFixedWorldPos(play, &this->actor.world.pos, 20, NA_SE_SY_PIECE_OF_HEART);
+            }
+            if (thisx->colChkInfo.health > 100) {
+                thisx->colChkInfo.health = 100;
+                Animation_PlayOnce(&this->skelAnime, &gTitanSkelanimeGtitanskelanimeuncoverAnim);
+                this->action = 7;
+                this->timer = 0;
+            }
+            break;
+        case 7: //unCover
+            if (this->timer > 20) {
+                this->timer = 0;
+                this->action = 5;
+                this->hammerphase = 1;
+                thisx->naviEnemyId = NAVI_ENEMY_TITAN+1;
+                Actor_OfferGetItem(&this->actor, play, GI_HAMMER,10000.0f,10000.0f);
             }
             break;
     }
@@ -288,13 +317,17 @@ void Titan_Update(Actor* thisx, PlayState* play) {
             this->colliderStar.base.acFlags &= ~AC_HIT;
             this->action = 3;
         }
+        if (thisx->colChkInfo.damageReaction == 2 && this->shield > 0) {
+            this->shield = 0;
+            SfxSource_PlaySfxAtFixedWorldPos(play, &this->actor.world.pos, 20, NA_SE_EV_ICE_BROKEN);
+        }
     }
 
     if (this->collider.base.acFlags & AC_HIT) {
         this->hittimer = 0;
         this->collider.base.acFlags &= ~AC_HIT;
 
-        if (this->shield == 0) {
+        if (this->shield == 0 && this->action != 6) {
             Actor_SetColorFilter(thisx, COLORFILTER_COLORFLAG_RED, 255, COLORFILTER_BUFFLAG_OPA, 8);
             Actor_ApplyDamage(thisx);
         }
@@ -310,9 +343,13 @@ void Titan_Update(Actor* thisx, PlayState* play) {
     CollisionCheck_SetOC(play, &play->colChkCtx, &this->collider.base);
 
     Collider_UpdateCylinder(&this->actor, &this->colliderStar);
-    this->colliderStar.dim.pos.z += Math_CosS(thisx->world.rot.y) * 140;
-    this->colliderStar.dim.pos.x += Math_SinS(thisx->world.rot.y) * 140;
+    this->colliderStar.dim.pos.z += Math_CosS(thisx->world.rot.y) * 130;
+    this->colliderStar.dim.pos.x += Math_SinS(thisx->world.rot.y) * 130;
     this->colliderStar.dim.pos.y += 80;
+
+    thisx->focus.pos.x = this->colliderStar.dim.pos.x;
+    thisx->focus.pos.y = this->colliderStar.dim.pos.y + 50;
+    thisx->focus.pos.z = this->colliderStar.dim.pos.z;
 
     if (this->shield > 0) {
         CollisionCheck_SetOC(play, &play->colChkCtx, &this->colliderStar.base);
