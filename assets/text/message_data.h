@@ -12878,6 +12878,36 @@ MSG(/* MISSING */)
 MSG(/* MISSING */)
 )
 
+DEFINE_MESSAGE(0x0660, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(/* MISSING */)
+,
+MSG(
+"Congrats, you beat the Titan!\n\
+You have reached the end of this\n\
+minihack."
+BOX_BREAK
+"Hack by:\n\
+Rovertronic"
+BOX_BREAK
+"Music by:\n\
+The Rebellion Warrior"
+BOX_BREAK
+"Streamed audio help:\n\
+xor"
+BOX_BREAK
+"Inspiration:\n\
+DELTARUNE by Toby Fox"
+BOX_BREAK
+"Created for Hylian Modding\n\
+2025 Crossover Competition"
+BOX_BREAK
+"Thanks for playing!"
+)
+,
+MSG(/* MISSING */)
+,
+MSG(/* MISSING */)
+)
 
 DEFINE_MESSAGE(0x086D, TEXTBOX_TYPE_OCARINA, TEXTBOX_POS_VARIABLE,
 MSG(

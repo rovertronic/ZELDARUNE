@@ -36,8 +36,8 @@
 #include "sequence.h"
 #include "sfx.h"
 
-//#include "debug/print.h"
-//#include "debug.h"
+#include "debug/print.h"
+#include "debug.h"
 
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_UPDATE_CULLING_DISABLED)
 
@@ -164,11 +164,6 @@ void Titan_Init(Actor* thisx, PlayState* play) {
 
     thisx->colChkInfo.health = 100;
 
-    Actor_Spawn(&play->actorCtx, play,
-    ACTOR_REDEYE,
-    thisx->world.pos.x, thisx->world.pos.y, thisx->world.pos.z, 
-    0, 0, 0, 0);
-
     TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL(gTitanTitleCard), 160,
                             180, 128, 40);
 }
@@ -276,7 +271,7 @@ void Titan_Update(Actor* thisx, PlayState* play) {
             if (thisx->colChkInfo.health < 100 - ((this->phase+1) * 25)) {
                 this->action = 5;
                 this->timer = 0;
-                if (this->phase == 0) {
+                if (this->phase == 2) {
                     Animation_PlayOnce(&this->skelAnime, &gTitanSkelanimeGtitanskelanimecoverAnim);
                     this->action = 6;
                     SEQCMD_STOP_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0);
@@ -291,6 +286,11 @@ void Titan_Update(Actor* thisx, PlayState* play) {
                 this->action = 0;
                 this->timer = 0;
                 this->phase ++;
+
+                Actor_Spawn(&play->actorCtx, play,
+                ACTOR_REDEYE,
+                thisx->world.pos.x, thisx->world.pos.y, thisx->world.pos.z, 
+                0, 0, 0, 0);
             }
             break;
         case 6://Recover uhoh
@@ -331,20 +331,10 @@ void Titan_Update(Actor* thisx, PlayState* play) {
                 Actor_PlaySfx(thisx, NA_SE_IT_BOMB_EXPLOSION);
             }
             if (this->timer > 200) {
-
-                //Print_Screen(&gDebug.printer, 2, 3+5, 0xDC0011, "Congrats, you have defeated the Titan.");
-                //Print_Screen(&gDebug.printer, 2, 4+5, 0xD0D0FF, "Hack by: Rovertronic");
-                //Print_Screen(&gDebug.printer, 2, 5+5, 0xD0D0FF, "Music by: The Rebellion Warrior");
-                //Print_Screen(&gDebug.printer, 2, 6+5, 0xD0D0FF, "Streamed audio help: int128_t");
-                //Print_Screen(&gDebug.printer, 2, 8+5, 0xD0D0FF, "Inspired by: DELTARUNE by Toby Fox");
-                //Print_Screen(&gDebug.printer, 2, 10+5, 0xD0D0FF, "Made for: Hylian Modding Competition");
-                //Print_Screen(&gDebug.printer, 2, 10+6, 0xD0D0FF, "2025 - Crossover");
-                //Print_Screen(&gDebug.printer, 2, 10+8, 0xD0D0FF, "This is my first OOT hack, sorry");
-                //Print_Screen(&gDebug.printer, 2, 10+9, 0xD0D0FF, "if some aspects sucked or were jank");
-                //Print_Screen(&gDebug.printer, 2, 10+10, 0xD0D0FF, "also learned oot decomp in 2 weeks");
-            }
-            if (this->timer > 202) {
-                while(1){}
+                this->action = 9;
+                Cutscene_StartManual(play, &play->csCtx);
+                Player_SetCsActionWithHaltedActors(play, &this->actor, PLAYER_CSACTION_57);
+                Message_StartTextbox(play, 0x0660, NULL);
             }
             break;
     }

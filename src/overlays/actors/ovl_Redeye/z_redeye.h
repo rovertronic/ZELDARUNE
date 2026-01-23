@@ -14,6 +14,7 @@ typedef struct Redeye {
     RedeyeActionFunc actionFunc;
     ColliderJntSph collider;
     ColliderJntSphElement colliderElements[1];
+    Vec3f vel;
 } Redeye;
 
 #endif
