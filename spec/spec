@@ -294,6 +294,7 @@ beginseg
     include "$(BUILD_DIR)/assets/audio/sequences/seq_108.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_109.prg.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_MyAudioStream.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_MyAudioStream2.o"
 endseg
 
 beginseg

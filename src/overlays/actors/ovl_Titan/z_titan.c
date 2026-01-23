@@ -313,6 +313,7 @@ void Titan_Update(Actor* thisx, PlayState* play) {
                 this->hammerphase = 1;
                 thisx->naviEnemyId = NAVI_ENEMY_TITAN+1;
                 Actor_OfferGetItem(&this->actor, play, GI_HAMMER,10000.0f,10000.0f);
+                SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0, 0, NA_BGM_MYAUDIOSTREAM2);
             }
             break;
         case 8: //fucking daie

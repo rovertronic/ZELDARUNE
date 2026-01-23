@@ -9,9 +9,11 @@
     <Samples>
         <Sample Name="SAMPLE_0_MYAUDIOSTREAM_L"/>
         <Sample Name="SAMPLE_0_MYAUDIOSTREAM_R"/>
+        <Sample Name="SAMPLE_0_NEEDAHAND"/>
     </Samples>
     <Instruments>
         <Instrument ProgramNumber="0" Name="INST_0" Envelope="Env0" Sample="SAMPLE_0_MYAUDIOSTREAM_L"/>
         <Instrument ProgramNumber="1" Name="INST_1" Envelope="Env0" Sample="SAMPLE_0_MYAUDIOSTREAM_R"/>
+        <Instrument ProgramNumber="2" Name="INST_2" Envelope="Env0" Sample="SAMPLE_0_NEEDAHAND"/>
     </Instruments>
 </Soundfont>
