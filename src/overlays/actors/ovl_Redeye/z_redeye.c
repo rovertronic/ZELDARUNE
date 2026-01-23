@@ -99,7 +99,7 @@ void Redeye_Init(Actor* thisx, PlayState* play) {
 
     Collider_InitJntSph(play, &this->collider);
     Collider_SetJntSph(play, &this->collider, &this->actor, &sJntSphInit, this->colliderElements);
-    this->collider.elements[0].dim.worldSphere.radius = 58;
+    this->collider.elements[0].dim.worldSphere.radius = 25;
 
     thisx->world.pos.y += 15.0f;
 

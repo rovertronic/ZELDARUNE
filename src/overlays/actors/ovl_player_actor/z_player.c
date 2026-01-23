@@ -9452,6 +9452,8 @@ void func_80843AE8(PlayState* play, Player* this) {
         play->transitionTrigger = TRANS_TRIGGER_START;
         play->transitionType = TRANS_TYPE_FADE_BLACK;
         gSaveContext.save.info.playerData.health = gSaveContext.save.info.playerData.healthCapacity;
+        Sram_InitDebugSave();
+        gSaveContext.save.info.playerData.magic = 0;
     }
 }
 
@@ -11142,6 +11144,34 @@ void Player_ProcessSceneCollision(PlayState* play, Player* this) {
     u32 flags;
 
     sPrevFloorProperty = this->floorProperty;
+
+    if (this->actor.world.pos.y < -150.0f) {
+        //play->transitionTrigger = TRANS_TRIGGER_START;
+        //play->transitionType = TRANS_TYPE_FADE_BLACK_FAST;
+
+        
+        int ok = false;
+
+        while(!ok){
+            Actor* pointer = play->actorCtx.actorLists[ACTORCAT_BG].head;
+            while(pointer != NULL) {
+                if ((pointer->id == ACTOR_DESTRUCTIBLE_BOOKSHELVES) && pointer->world.pos.y > -1.0f && (Rand_ZeroOne() > .9f)) {
+                    this->actor.world.pos.x = pointer->world.pos.x;
+                    this->actor.world.pos.z = pointer->world.pos.z;
+                    ok = true;
+                }
+                pointer = pointer->next;
+            }
+        }
+        
+
+        this->actor.velocity.y = 0;
+        this->actor.world.pos.y = 20;
+
+        Player_InflictDamage(play, -4);
+        Actor_SetColorFilter(&this->actor, COLORFILTER_COLORFLAG_RED, 255, COLORFILTER_BUFFLAG_OPA, 8);
+        return;
+    }
 
 #define vWallCheckRadius float0
 #define vWallCheckHeight float1
