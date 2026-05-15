@@ -26,6 +26,9 @@ typedef struct Titan {
     int hittimer;
     int phase;
     int hammerphase;
+    int introAlpha;
+    int dieAlpha;
+    int invisible;
 
     u8 shield;
 } Titan;

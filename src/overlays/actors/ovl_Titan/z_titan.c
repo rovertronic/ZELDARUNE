@@ -158,7 +158,7 @@ void Titan_Init(Actor* thisx, PlayState* play) {
     this->action = 10;
     this->timer = 0;
     this->hittimer = 0;
-    this->phase = 0;
+    this->phase = 2;
     this->hammerphase = 0;
 
     this->shield = 38;
@@ -169,6 +169,15 @@ void Titan_Init(Actor* thisx, PlayState* play) {
     this->actor.flags |= ACTOR_FLAG_FREEZE_EXCEPTION;
     Cutscene_SetScript(play, titanIntro);
     gSaveContext.cutsceneTrigger = 1;
+
+    thisx->scale.x = .02;
+    thisx->scale.y = .02;
+    thisx->scale.z = .02;
+
+    this->introAlpha = 255;
+    this->dieAlpha = 0;
+
+    this->invisible = false;
 }
 
 void Titan_Destroy(Actor* thisx, PlayState* play) {
@@ -329,6 +338,7 @@ void Titan_Update(Actor* thisx, PlayState* play) {
             }
             break;
         case 8: //fucking daie
+            /*
             thisx->world.pos.y -= 1.0f;
             if (this->timer % 5 == 0) {
                 Vec3f effVelocity = { 0.0f, 0.0f, 0.0f };
@@ -348,8 +358,28 @@ void Titan_Update(Actor* thisx, PlayState* play) {
                 Player_SetCsActionWithHaltedActors(play, &this->actor, PLAYER_CSACTION_57);
                 Message_StartTextbox(play, 0x0660, NULL);
             }
+            */
+            if (this->timer < 120) {
+                this->dieAlpha += 30;
+                if (this->dieAlpha > 255) {this->dieAlpha = 255;}
+                Actor_PlaySfx_FlaggedCentered2(&this->actor, NA_SE_EV_TIMETRIP_LIGHT - SFX_FLAG);
+            } else {
+                this->invisible = true;
+                this->dieAlpha -= 30;
+                if (this->dieAlpha < 0) {this->dieAlpha = 0;}
+            }
             break;
         case 10: //introcutscene
+            if (this->timer > 90) {
+                this->introAlpha -= 30;
+                if (this->introAlpha < 0) {
+                    this->introAlpha = 0;
+                }
+            }
+            if (this->timer == 90) {
+                SfxSource_PlaySfxAtFixedWorldPos(play, &this->actor.world.pos, 20, NA_SE_EV_FLYING_AIR);
+            }
+
             if (this->timer == 110) {
                 SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0, 0, NA_BGM_MYAUDIOSTREAM);
                 TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL(gTitanTitleCard), 160,
@@ -446,7 +476,7 @@ void Titan_Update(Actor* thisx, PlayState* play) {
         pointer = pointer->next;
     }
 
-    if ((bubbleCount < 100) && (this->timer % 4 == 0) && (Rand_ZeroOne() > play->titanGlobalHealth * .01f)) {
+    if ((!this->invisible) && (bubbleCount < 100) && (this->timer % 4 == 0) && (Rand_ZeroOne() > play->titanGlobalHealth * .01f)) {
         s16 randAngle = Rand_ZeroOne() * 0xFFFF;
 
         Darkbubble * darkBubble = (Darkbubble *)Actor_Spawn(&play->actorCtx, play,
@@ -476,12 +506,24 @@ void Titan_Draw(Actor* thisx, PlayState* play) {
 
     OPEN_DISPS(play->state.gfxCtx);
 
-    SkelAnime_DrawOpa(play, this->skelAnime.skeleton, this->skelAnime.jointTable,
-                      NULL, NULL, this);
+    if (!this->invisible) {
+        SkelAnime_DrawOpa(play, this->skelAnime.skeleton, this->skelAnime.jointTable,
+                        NULL, NULL, this);
 
-    gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, this->shield );
+        gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, this->shield );
 
-    Gfx_DrawDListOpa(play, gTitanShield_transparent_dl);
+        Gfx_DrawDListOpa(play, gTitanShield_transparent_dl);
+    }
+
+    if (this->introAlpha > 0) {
+        gDPSetEnvColor(POLY_XLU_DISP++, 255, 255, 255, this->introAlpha );
+        Gfx_DrawDListXlu(play, gTitanSilhouette_transparent_dl);
+    }
+
+    if (this->dieAlpha > 0) {
+        gDPSetEnvColor(POLY_XLU_DISP++, 255, 255, 255, this->dieAlpha );
+        Gfx_DrawDListXlu(play, gTitanDieRay_transparent_dl);
+    }
 
     CLOSE_DISPS(play->state.gfxCtx);
 }

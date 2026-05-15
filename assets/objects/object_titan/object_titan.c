@@ -12,3 +12,7 @@ u64 const gTitanTitleCard[] = {
 #include "gTitanSkelanime.c"
 
 #include "gTitanShield.c"
+
+#include "gTitanSilhouette.c"
+
+#include "gTitanDieRay.c"

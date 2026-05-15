@@ -11,3 +11,7 @@ extern const u64 gTitanTitleCard[];
 #include "gTitanSkelanime.h"
 
 #include "gTitanShield.h"
+
+#include "gTitanSilhouette.h"
+
+#include "gTitanDieRay.h"
