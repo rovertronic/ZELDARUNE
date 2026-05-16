@@ -27,6 +27,7 @@
 #include "save.h"
 #include "debug.h"
 #include "libc64/sprintf.h"
+#include "message.h"
 
 #include "assets/textures/parameter_static/parameter_static.h"
 #include "assets/textures/do_action_static/do_action_static.h"
@@ -3002,9 +3003,30 @@ void Magic_Update(PlayState* play) {
     }
 }
 
+#include "libu64/gfxprint.h"
+
+void My_DrawHudText(PlayState* play) {
+    GfxPrint printer;
+    InterfaceContext* interfaceCtx = &play->interfaceCtx;
+
+    if (interfaceCtx->magicAlpha < 128) {return;}
+
+    OPEN_DISPS(play->state.gfxCtx);
+    GfxPrint_Init(&printer);
+    GfxPrint_Open(&printer, OVERLAY_DISP);
+    GfxPrint_SetPos(&printer, 32, 25);
+    GfxPrint_SetColor(&printer, 255, 255, 255, interfaceCtx->magicAlpha);
+    GfxPrint_Printf(&printer, "TITAN");
+    OVERLAY_DISP = GfxPrint_Close(&printer);
+    GfxPrint_Destroy(&printer);
+    CLOSE_DISPS(play->state.gfxCtx);
+}
+
 void Magic_DrawMeter(PlayState* play) {
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
     s16 magicMeterY;
+
+    My_DrawHudText(play);
 
     //har titanhpstr[100];
     //printf(titanhpstr,"TITAN %d",play->titanGlobalHealth);
@@ -3019,11 +3041,8 @@ void Magic_DrawMeter(PlayState* play) {
     ) {
 
         // NOLINTBEGIN
-        if (gSaveContext.save.info.playerData.healthCapacity > 0xA0)
-            magicMeterY = R_MAGIC_METER_Y_LOWER; // two rows of hearts
-        else
-            magicMeterY = R_MAGIC_METER_Y_HIGHER; // one row of hearts
-                                                  // NOLINTEND
+        magicMeterY = 210; // two rows of hearts
+
 
 #if IS_INV_EDITOR_ENABLED
         if (IS_INV_EDITOR_ACTIVE) {
@@ -3041,12 +3060,12 @@ void Magic_DrawMeter(PlayState* play) {
 
         //! TODO: find something better
         {
-            OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterEndTex, 8, 16, WIDE_INCR(R_MAGIC_METER_X+60, -4),
+            OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterEndTex, 8, 16, WIDE_INCR(R_MAGIC_METER_X+220, -4),
                                           magicMeterY, WIDE_INCR(8, -2), 16, 1 << 10, 1 << 10);
         }
 
         OVERLAY_DISP =
-            Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterMidTex, 24, 16, WIDE_INCR((R_MAGIC_METER_X+60 + 8), -6), magicMeterY,
+            Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterMidTex, 24, 16, WIDE_INCR((R_MAGIC_METER_X+220 + 8), -6), magicMeterY,
                            WIDE_MULT(gSaveContext.magicCapacity, WIDE_GET_RATIO), 16, 1 << 10, 1 << 10);
 
         gDPLoadTextureBlock(OVERLAY_DISP++, gMagicMeterEndTex, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 16, 0,
@@ -3054,8 +3073,8 @@ void Magic_DrawMeter(PlayState* play) {
 
         gSPTextureRectangle(
             OVERLAY_DISP++,
-            WIDE_MULT(WIDE_INCR((R_MAGIC_METER_X+60 + 8 + gSaveContext.magicCapacity), 1), WIDE_GET_RATIO) << 2,
-            magicMeterY << 2, WIDE_MULT((R_MAGIC_METER_X+60 + 8 + gSaveContext.magicCapacity + 8), WIDE_GET_RATIO) << 2,
+            WIDE_MULT(WIDE_INCR((R_MAGIC_METER_X+220 + 8 + gSaveContext.magicCapacity), 1), WIDE_GET_RATIO) << 2,
+            magicMeterY << 2, WIDE_MULT((R_MAGIC_METER_X+220 + 8 + gSaveContext.magicCapacity + 8), WIDE_GET_RATIO) << 2,
             (magicMeterY + 16) << 2, G_TX_RENDERTILE, 256, 0, WIDE_DIV((1 << 10), WIDE_GET_RATIO), 1 << 10);
 
         gDPPipeSync(OVERLAY_DISP++);
@@ -3070,9 +3089,9 @@ void Magic_DrawMeter(PlayState* play) {
         gDPPipeSync(OVERLAY_DISP++);
 
         {
-            s16 posX = WIDE_MULT(WIDE_INCR(R_MAGIC_FILL_X+60, 1), WIDE_GET_RATIO);
+            s16 posX = WIDE_MULT(WIDE_INCR(R_MAGIC_FILL_X+220, 1), WIDE_GET_RATIO);
             s16 posRx =
-                WIDE_MULT(WIDE_INCR((R_MAGIC_FILL_X+60 + (play->titanGlobalHealth/2) ), 1), WIDE_GET_RATIO);
+                WIDE_MULT(WIDE_INCR((R_MAGIC_FILL_X+220 + (play->titanGlobalHealth/2) ), 1), WIDE_GET_RATIO);
             gSPTextureRectangle(OVERLAY_DISP++, posX << 2, (magicMeterY + 3) << 2, posRx << 2,
                                 (magicMeterY + 10) << 2, G_TX_RENDERTILE, 0, 0, WIDE_DIV((1 << 10), WIDE_GET_RATIO),
                                 1 << 10);
@@ -3080,7 +3099,12 @@ void Magic_DrawMeter(PlayState* play) {
 
         /// BOSS TITAN HEALTH BAR END!!!
 
-
+        // NOLINTBEGIN
+        if (gSaveContext.save.info.playerData.healthCapacity > 0xA0)
+            magicMeterY = R_MAGIC_METER_Y_LOWER; // two rows of hearts
+        else
+            magicMeterY = R_MAGIC_METER_Y_HIGHER; // one row of hearts
+                                                  // NOLINTEND
 
         gDPSetPrimColor(OVERLAY_DISP++, 0, 0, sMagicBorderR, sMagicBorderG, sMagicBorderB, interfaceCtx->magicAlpha);
         gDPSetEnvColor(OVERLAY_DISP++, 100, 50, 50, 255);

@@ -359,6 +359,7 @@ void Titan_Update(Actor* thisx, PlayState* play) {
                 Message_StartTextbox(play, 0x0660, NULL);
             }
             */
+            this->actor.attentionRangeType = ATTENTION_RANGE_0;
             if (this->timer < 120) {
                 this->dieAlpha += 30;
                 if (this->dieAlpha > 255) {this->dieAlpha = 255;}
@@ -445,20 +446,22 @@ void Titan_Update(Actor* thisx, PlayState* play) {
     this->hittimer++;
 
     // Update Collision
-    Collider_UpdateCylinder(&this->actor, &this->collider);
-    if (this->hittimer > 5) {
-        CollisionCheck_SetAC(play, &play->colChkCtx, &this->collider.base);
+    if (this->action != 8) {
+        Collider_UpdateCylinder(&this->actor, &this->collider);
+        if (this->hittimer > 5) {
+            CollisionCheck_SetAC(play, &play->colChkCtx, &this->collider.base);
+        }
+        CollisionCheck_SetOC(play, &play->colChkCtx, &this->collider.base);
+
+        Collider_UpdateCylinder(&this->actor, &this->colliderStar);
+        this->colliderStar.dim.pos.z += Math_CosS(thisx->world.rot.y) * 130;
+        this->colliderStar.dim.pos.x += Math_SinS(thisx->world.rot.y) * 130;
+        this->colliderStar.dim.pos.y += 80;
+
+        thisx->focus.pos.x = this->colliderStar.dim.pos.x;
+        thisx->focus.pos.y = this->colliderStar.dim.pos.y + 50;
+        thisx->focus.pos.z = this->colliderStar.dim.pos.z;
     }
-    CollisionCheck_SetOC(play, &play->colChkCtx, &this->collider.base);
-
-    Collider_UpdateCylinder(&this->actor, &this->colliderStar);
-    this->colliderStar.dim.pos.z += Math_CosS(thisx->world.rot.y) * 130;
-    this->colliderStar.dim.pos.x += Math_SinS(thisx->world.rot.y) * 130;
-    this->colliderStar.dim.pos.y += 80;
-
-    thisx->focus.pos.x = this->colliderStar.dim.pos.x;
-    thisx->focus.pos.y = this->colliderStar.dim.pos.y + 50;
-    thisx->focus.pos.z = this->colliderStar.dim.pos.z;
 
     if (this->shield > 0) {
         CollisionCheck_SetOC(play, &play->colChkCtx, &this->colliderStar.base);
