@@ -192,7 +192,8 @@ void Titan_Init(Actor* thisx, PlayState* play) {
     thisx->colChkInfo.health = 100;
 
     this->actor.flags |= ACTOR_FLAG_FREEZE_EXCEPTION;
-    Cutscene_SetScript(play, titanIntro2);
+    //Cutscene_SetScript(play, titanIntro2);
+    Cutscene_SetScript(play, oldmanreveal);
     gSaveContext.cutsceneTrigger = 1;
 
     thisx->scale.x = .02;
@@ -358,8 +359,12 @@ void Titan_Update(Actor* thisx, PlayState* play) {
                 this->action = 5;
                 this->hammerphase = 1;
                 thisx->naviEnemyId = NAVI_ENEMY_TITAN+1;
-                Actor_OfferGetItem(&this->actor, play, GI_HAMMER,10000.0f,10000.0f);
-                SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0, 0, NA_BGM_MYAUDIOSTREAM2);
+                //Actor_OfferGetItem(&this->actor, play, GI_HAMMER,10000.0f,10000.0f);
+
+                Cutscene_SetScript(play, oldmanreveal);
+                gSaveContext.cutsceneTrigger = 1;
+
+                //SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0, 0, NA_BGM_MYAUDIOSTREAM2);
             }
             break;
         case 8: //fucking daie

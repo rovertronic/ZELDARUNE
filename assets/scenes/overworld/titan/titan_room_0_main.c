@@ -350,7 +350,7 @@ ActorEntry titan_room_0_header00_actorList[LENGTH_TITAN_ROOM_0_HEADER00_ACTORLIS
     // Custom Actor
     {
         /* Actor ID   */ ACTOR_OLDMAN,
-        /* Position   */ { 1, 22, 1294 },
+        /* Position   */ { 312, 33, 1598 },
         /* Rotation   */ { DEG_TO_BINANG(0.000), DEG_TO_BINANG(180.000), DEG_TO_BINANG(0.000) },
         /* Parameters */ 0x0000
     },
