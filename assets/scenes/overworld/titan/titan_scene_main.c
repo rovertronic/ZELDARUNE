@@ -13,7 +13,6 @@ SceneCmd titan_scene_header00[] = {
     SCENE_CMD_ENV_LIGHT_SETTINGS(1, titan_scene_header00_lightSettings),
     SCENE_CMD_SPAWN_LIST(titan_scene_header00_entranceList),
     SCENE_CMD_PLAYER_ENTRY_LIST(1, titan_scene_header00_playerEntryList),
-    SCENE_CMD_CUTSCENE_DATA(titanIntro),
     SCENE_CMD_END(),
 };
 

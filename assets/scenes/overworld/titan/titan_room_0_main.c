@@ -3,8 +3,8 @@
 /**
  * Header Child Day (Default)
 */
-#define LENGTH_TITAN_ROOM_0_HEADER00_OBJECTLIST 6
-#define LENGTH_TITAN_ROOM_0_HEADER00_ACTORLIST 41
+#define LENGTH_TITAN_ROOM_0_HEADER00_OBJECTLIST 7
+#define LENGTH_TITAN_ROOM_0_HEADER00_ACTORLIST 42
 SceneCmd titan_room_0_header00[] = {
     SCENE_CMD_ROOM_SHAPE(&titan_room_0_shapeHeader),
     SCENE_CMD_ECHO_SETTINGS(0x00),
@@ -23,6 +23,7 @@ s16 titan_room_0_header00_objectList[LENGTH_TITAN_ROOM_0_HEADER00_OBJECTLIST] = 
     OBJECT_KIBAKO2,
     OBJECT_DARKBUBBLE,
     OBJECT_REDEYE,
+    OBJECT_DU,
 };
 
 ActorEntry titan_room_0_header00_actorList[LENGTH_TITAN_ROOM_0_HEADER00_ACTORLIST] = {
@@ -344,6 +345,14 @@ ActorEntry titan_room_0_header00_actorList[LENGTH_TITAN_ROOM_0_HEADER00_ACTORLIS
         /* Position   */ { 978, -203, -816 },
         /* Rotation   */ { DEG_TO_BINANG(0.000), DEG_TO_BINANG(0.000), DEG_TO_BINANG(0.000) },
         /* Parameters */ 0x0003
+    },
+
+    // Custom Actor
+    {
+        /* Actor ID   */ ACTOR_OLDMAN,
+        /* Position   */ { 1, 22, 1294 },
+        /* Rotation   */ { DEG_TO_BINANG(0.000), DEG_TO_BINANG(180.000), DEG_TO_BINANG(0.000) },
+        /* Parameters */ 0x0000
     },
 
     // Custom Actor

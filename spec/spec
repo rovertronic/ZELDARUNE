@@ -1178,6 +1178,12 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_OLDMAN"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_OLDMAN/z_oldman.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_OLDMAN/ovl_OLDMAN_reloc.o"
+endseg
+
+beginseg
     name "gameplay_keep"
     compress
     romalign 0x1000
