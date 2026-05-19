@@ -22,6 +22,8 @@
 
 #include "assets/objects/object_du/object_du.h"
 
+#include "assets/scenes/overworld/titan/titan_scene.h"
+
 #define FLAGS (0)
 
 void OLDMAN_Init(Actor* thisx, PlayState* play);
@@ -33,7 +35,7 @@ void OLDMAN_DoNothing(OLDMAN* this, PlayState* play);
 
 ActorProfile OLDMAN_Profile = {
     ACTOR_OLDMAN,
-    ACTORCAT_PROP,
+    ACTORCAT_NPC,
     FLAGS,
     OBJECT_DU,
     sizeof(OLDMAN),
@@ -64,7 +66,7 @@ static AnimationInfo sAnimationInfo[] = {
 void OLDMAN_Init(Actor* thisx, PlayState* play) {
     OLDMAN* this = (OLDMAN*)thisx;
 
-    Animation_ChangeByInfo(&this->skelAnime, sAnimationInfo, 0);
+    //Animation_ChangeByInfo(&this->skelAnime, sAnimationInfo, 0);
     Actor_SetScale(&this->actor, 0.01f);
 
     SkelAnime_InitFlex(
@@ -78,6 +80,10 @@ void OLDMAN_Init(Actor* thisx, PlayState* play) {
     );
 
     this->actionFunc = OLDMAN_DoNothing;
+
+    this->actor.flags |= ACTOR_FLAG_FREEZE_EXCEPTION;
+
+    Animation_PlayLoop(&this->skelAnime, &gDaruniaIdleAnim);
 }
 
 void OLDMAN_Destroy(Actor* thisx, PlayState* play) {
@@ -87,20 +93,24 @@ void OLDMAN_Destroy(Actor* thisx, PlayState* play) {
 void OLDMAN_Update(Actor* thisx, PlayState* play) {
     OLDMAN* this = (OLDMAN*)thisx;
 
+    SkelAnime_Update(&this->skelAnime);
+
     this->actionFunc(this, play);
 }
 
 void OLDMAN_Draw(Actor* thisx, PlayState* play) {
-    OLDMAN* this = (OLDMAN*)thisx;
+    if (play->csCtx.script == SEGMENTED_TO_VIRTUAL(oldmanreveal) && play->csCtx.state != CS_STATE_IDLE) {
+        OLDMAN* this = (OLDMAN*)thisx;
 
-    OPEN_DISPS(play->state.gfxCtx);
-    
-    gSPSegment(POLY_OPA_DISP++, 0x08, SEGMENTED_TO_VIRTUAL(gDaruniaEyeOpenTex));
-    gSPSegment(POLY_OPA_DISP++, 0x09, SEGMENTED_TO_VIRTUAL(gDaruniaMouthGrinningTex));
-    gSPSegment(POLY_OPA_DISP++, 0x0A, SEGMENTED_TO_VIRTUAL(gDaruniaNoseSeriousTex));
+        OPEN_DISPS(play->state.gfxCtx);
+        
+        gSPSegment(POLY_OPA_DISP++, 0x08, SEGMENTED_TO_VIRTUAL(gDaruniaEyeOpenTex));
+        gSPSegment(POLY_OPA_DISP++, 0x09, SEGMENTED_TO_VIRTUAL(gDaruniaMouthGrinningTex));
+        gSPSegment(POLY_OPA_DISP++, 0x0A, SEGMENTED_TO_VIRTUAL(gDaruniaNoseSeriousTex));
 
-    SkelAnime_DrawFlexOpa(play, this->skelAnime.skeleton, this->skelAnime.jointTable, this->skelAnime.dListCount, NULL, NULL, this);
-    CLOSE_DISPS(play->state.gfxCtx);
+        SkelAnime_DrawFlexOpa(play, this->skelAnime.skeleton, this->skelAnime.jointTable, this->skelAnime.dListCount, NULL, NULL, this);
+        CLOSE_DISPS(play->state.gfxCtx);
+    }
 }
 
 void OLDMAN_DoNothing(OLDMAN* this, PlayState* play) {

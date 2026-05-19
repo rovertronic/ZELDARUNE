@@ -12930,7 +12930,7 @@ for a change a'\n\
 scenery..."
 BOX_BREAK
 "But this is a\n\
-bit rediculous."
+bit ridiculous."
 BOX_BREAK
 "Here, catch!"
 )
