@@ -433,4 +433,5 @@
     <Sample Name="SAMPLE_0_MYAUDIOSTREAM_L" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/MyAudioStream_L.aifc"/>
     <Sample Name="SAMPLE_0_MYAUDIOSTREAM_R" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/MyAudioStream_R.aifc"/>
     <Sample Name="SAMPLE_0_NEEDAHAND" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/needahand.aifc"/>
+    <Sample Name="SAMPLE_0_INTRO" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/intro.aifc"/>
 </SampleBank>

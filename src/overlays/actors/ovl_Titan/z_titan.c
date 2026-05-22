@@ -192,8 +192,12 @@ void Titan_Init(Actor* thisx, PlayState* play) {
     thisx->colChkInfo.health = 100;
 
     this->actor.flags |= ACTOR_FLAG_FREEZE_EXCEPTION;
-    Cutscene_SetScript(play, titanIntro2);
-    gSaveContext.cutsceneTrigger = 1;
+
+    SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0, 0, NA_BGM_MYAUDIOSTREAM3);
+    this->action = 12;
+
+    //Cutscene_SetScript(play, titanIntro2);
+    //gSaveContext.cutsceneTrigger = 1;
 
     thisx->scale.x = .02;
     thisx->scale.y = .02;
@@ -428,6 +432,9 @@ void Titan_Update(Actor* thisx, PlayState* play) {
                 Actor_OfferGetItem(&this->actor, play, GI_HAMMER,10000.0f,10000.0f);
                 this->action = 5;
             }
+            break;
+        case 12: // Prologue
+
             break;
     }
 
