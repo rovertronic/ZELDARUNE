@@ -162,7 +162,10 @@ CutsceneData titanIntro2[] = {
     CS_END_OF_SCRIPT(),
 };
 
+static int prologuePlayed = false;
+
 void Titan_Init(Actor* thisx, PlayState* play) {
+
     Titan* this = (Titan*)thisx;
 
     this->actionFunc = Titan_DoNothing;
@@ -193,11 +196,15 @@ void Titan_Init(Actor* thisx, PlayState* play) {
 
     this->actor.flags |= ACTOR_FLAG_FREEZE_EXCEPTION;
 
-    SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0, 0, NA_BGM_MYAUDIOSTREAM3);
-    this->action = 12;
-
-    //Cutscene_SetScript(play, titanIntro2);
-    //gSaveContext.cutsceneTrigger = 1;
+    if (!prologuePlayed) {
+        SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0, 0, NA_BGM_MYAUDIOSTREAM3);
+        this->action = 12;
+        Cutscene_SetScript(play, titanPrologue);
+        prologuePlayed = true;
+    } else {
+        Cutscene_SetScript(play, titanIntro2);
+    }
+    gSaveContext.cutsceneTrigger = 1;
 
     thisx->scale.x = .02;
     thisx->scale.y = .02;
@@ -434,7 +441,18 @@ void Titan_Update(Actor* thisx, PlayState* play) {
             }
             break;
         case 12: // Prologue
-
+            switch(this->timer) {
+                case 45:
+                case 100:
+                    Message_CloseTextbox(play);
+                    break;
+            }
+            if (play->csCtx.state == CS_STATE_IDLE) {
+                this->action = 10;
+                this->timer = 0;
+                Cutscene_SetScript(play, titanIntro2);
+                gSaveContext.cutsceneTrigger = 1;
+            }
             break;
     }
 

@@ -43,6 +43,7 @@ extern ActorEntry titan_scene_header00_playerEntryList[];
 extern Spawn titan_scene_header00_entranceList[];
 extern EnvLightSettings titan_scene_header00_lightSettings[1];
 extern CutsceneData oldmanreveal[];
+extern CutsceneData titanPrologue[];
 extern Vec3s titan_scene_camPosData[];
 extern BgCamInfo titan_scene_bgCamInfo[];
 extern SurfaceType titan_scene_polygonTypes[1];
