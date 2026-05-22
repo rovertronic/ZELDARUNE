@@ -3918,6 +3918,7 @@ beginseg
     include "$(BUILD_DIR)/assets/scenes/overworld/titan/titan_scene_col.o"
     include "$(BUILD_DIR)/assets/scenes/overworld/titan/titan_scene_cs_0.o"
     include "$(BUILD_DIR)/assets/scenes/overworld/titan/titan_scene_cs_1.o"
+    include "$(BUILD_DIR)/assets/scenes/overworld/titan/titan_scene_cs_2.o"
     number 2
 endseg
 

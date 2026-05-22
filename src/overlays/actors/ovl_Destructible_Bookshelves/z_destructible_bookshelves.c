@@ -65,6 +65,8 @@ void Destructible_Bookshelves_Init(Actor* thisx, PlayState* play) {
 
     // I know this happens 16 times, but don't really have a better idea lol
     sDownedBookshelves = 0;
+
+    thisx->cullingVolumeDistance = 20000;
 }
 
 void Destructible_Bookshelves_Destroy(Actor* thisx, PlayState* play) {

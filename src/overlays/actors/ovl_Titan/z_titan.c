@@ -186,7 +186,7 @@ void Titan_Init(Actor* thisx, PlayState* play) {
     this->action = 10;
     this->timer = 0;
     this->hittimer = 0;
-    this->phase = 2;
+    this->phase = 0;
     this->hammerphase = 0;
 
     this->shield = 38;
@@ -409,6 +409,11 @@ void Titan_Update(Actor* thisx, PlayState* play) {
                 this->invisible = true;
                 this->dieAlpha -= 30;
                 if (this->dieAlpha < 0) {this->dieAlpha = 0;}
+            }
+
+            if (this->timer == 150) {
+                Cutscene_SetScript(play, titanCredits);
+                gSaveContext.cutsceneTrigger = 1;
             }
             break;
         case 10: //introcutscene

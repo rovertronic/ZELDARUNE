@@ -12878,26 +12878,32 @@ MSG(/* MISSING */)
 MSG(/* MISSING */)
 )
 
-DEFINE_MESSAGE(0x0660, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+DEFINE_MESSAGE(0x0660, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(/* MISSING */)
 ,
 MSG(
+UNSKIPPABLE
 "Congrats, you beat the Titan!\n\
 You have reached the end of this\n\
 minihack."
 BOX_BREAK
+UNSKIPPABLE
 "Hack by:\n\
 Rovertronic"
 BOX_BREAK
+UNSKIPPABLE
 "Music by:\n\
-The Rebellion Warrior"
+The Rebellion Warrior, Toby Fox"
 BOX_BREAK
+UNSKIPPABLE
 "Streamed audio & cutscene help:\n\
 xor"
 BOX_BREAK
+UNSKIPPABLE
 "Inspiration:\n\
 DELTARUNE by Toby Fox"
 BOX_BREAK
+UNSKIPPABLE
 "Created for Hylian Modding\n\
 2025 Crossover Competition"
 BOX_BREAK
