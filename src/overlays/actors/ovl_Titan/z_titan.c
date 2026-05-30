@@ -351,6 +351,7 @@ void Titan_Update(Actor* thisx, PlayState* play) {
             }
             break;
         case 6://Recover uhoh
+            thisx->naviEnemyId = NAVI_ENEMY_TITAN+8;
             if (this->timer % 60 == 0) {
                 thisx->colChkInfo.health += 10;
                 Actor_SetColorFilter(thisx, COLORFILTER_COLORFLAG_GRAY, 255, COLORFILTER_BUFFLAG_OPA, 8);

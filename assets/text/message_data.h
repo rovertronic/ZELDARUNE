@@ -12971,6 +12971,27 @@ MSG(/* MISSING */)
 MSG(/* MISSING */)
 )
 
+DEFINE_MESSAGE(0x0665, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(/* MISSING */)
+,
+MSG(
+QUICKTEXT_ENABLE
+COLOR(LIGHTBLUE) "It's regenerating...\n\
+I don't know how to stop it."
+BOX_BREAK
+COLOR(LIGHTBLUE) "It seems we were only\n\
+damaging it's outer shell..."
+BOX_BREAK
+COLOR(LIGHTBLUE) "As long as the inside is intact...\n\
+This battle will just keep going..."
+BOX_BREAK
+COLOR(LIGHTBLUE) "We just have to keep on fighting...")
+,
+MSG(/* MISSING */)
+,
+MSG(/* MISSING */)
+)
+
 DEFINE_MESSAGE(0x086D, TEXTBOX_TYPE_OCARINA, TEXTBOX_POS_VARIABLE,
 MSG(
 SHIFT(60) QUICKTEXT_ENABLE COLOR(BLUE) "[A]" COLOR(DEFAULT) "と" COLOR(YELLOW) "[C]" COLOR(DEFAULT) "で演奏\n"

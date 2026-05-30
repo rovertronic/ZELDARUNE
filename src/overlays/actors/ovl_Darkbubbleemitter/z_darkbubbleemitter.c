@@ -40,6 +40,8 @@ void Darkbubbleemitter_Destroy(Actor* thisx, PlayState* play) {
 void Darkbubbleemitter_Update(Actor* thisx, PlayState* play) {
     Darkbubbleemitter* this = (Darkbubbleemitter*)thisx;
 
+    if (play->titanGlobalHealth <= 0) {return;}
+
     if (this->timer % 10 == 0) {
         Actor_Spawn(&play->actorCtx, play,
         ACTOR_DARKBUBBLE,
