@@ -377,14 +377,14 @@ Gfx* D_80125D88[(PLAYER_SHIELD_MAX + 2) * 4] = {
 
 Gfx* gPlayerLeftHandBgsDLs[] = {
     // biggoron sword
-    gLinkAdultLeftHandHoldingBgsNearDL,
+    blackshard_opaque_dl,
     gLinkChildLeftHandHoldingMasterSwordDL,
-    gLinkAdultLeftHandHoldingBgsFarDL,
+    blackshard_opaque_dl,
     gLinkChildLeftHandHoldingMasterSwordDL,
     // broken giant knife
-    gLinkAdultHandHoldingBrokenGiantsKnifeDL,
+    blackshard_broke_opaque_dl,
     gLinkChildLeftHandHoldingMasterSwordDL,
-    gLinkAdultHandHoldingBrokenGiantsKnifeFarDL,
+    blackshard_broke_opaque_dl,
     gLinkChildLeftHandHoldingMasterSwordDL,
 };
 

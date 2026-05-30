@@ -92,3 +92,7 @@ extern Gfx gLinkAdultRightShoulderNearDL[56];
 extern FlexSkeletonHeader gLinkAdultSkel;
 
 #endif
+
+#include "blackshard.h"
+
+#include "blackshard_broke.h"
