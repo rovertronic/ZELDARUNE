@@ -12892,6 +12892,10 @@ UNSKIPPABLE
 Rovertronic"
 BOX_BREAK
 UNSKIPPABLE
+"Blackshard model by:\n\
+NekoNeko"
+BOX_BREAK
+UNSKIPPABLE
 "Music by:\n\
 The Rebellion Warrior, Toby Fox"
 BOX_BREAK
