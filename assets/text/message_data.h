@@ -12980,7 +12980,7 @@ COLOR(LIGHTBLUE) "It's regenerating...\n\
 I don't know how to stop it."
 BOX_BREAK
 COLOR(LIGHTBLUE) "It seems we were only\n\
-damaging it's outer shell..."
+damaging its outer shell..."
 BOX_BREAK
 COLOR(LIGHTBLUE) "As long as the inside is intact...\n\
 This battle will just keep going..."
