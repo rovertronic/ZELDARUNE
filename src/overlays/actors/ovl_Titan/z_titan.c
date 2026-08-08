@@ -538,6 +538,7 @@ void Titan_Update(Actor* thisx, PlayState* play) {
 
     // Shadow "Blood" the more damage it takes
 
+    /*
     int bubbleCount = 0;
     Actor* pointer = play->actorCtx.actorLists[ACTORCAT_PROP].head;
     while(pointer != NULL) {
@@ -558,6 +559,7 @@ void Titan_Update(Actor* thisx, PlayState* play) {
         darkBubble->baseScale = .4f;
 
     }
+    */
 
     // Dont let player die during hammer phase
     if (this->hammerphase) {
